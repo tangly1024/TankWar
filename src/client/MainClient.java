@@ -20,19 +20,18 @@ public class MainClient extends JFrame {
     public int startY;
     public int startX;
 
-    public int tankX = 0;
-    public int tankY = 0;
+    Tank myTank;
 
 
-    public void initWindow(){
+    public void initWindow() {
         this.setSize(WINDOWWIDTH, WINDOWHEIGHT);
         this.setTitle(TITLE);
         this.setVisible(true);
 //        this.setResizable(false); //不可缩放窗口
-        this.setLocation(300,200);
+        this.setLocation(300, 200);
         startY = WINDOWHEIGHT - this.getContentPane().getHeight();
         startX = WINDOWWIDTH - this.getContentPane().getWidth();
-
+        myTank = new Tank(0, 0);
         //AddListener
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -46,27 +45,27 @@ public class MainClient extends JFrame {
 
     @Override
     public void paint(Graphics g) {
-        Color c = g.getColor();
         drawMyTank(g);
-        g.setColor(c);
     }
 
-    void drawMyTank(Graphics g){
+    void drawMyTank(Graphics g) {
+        Color c = g.getColor();
         g.setColor(Color.BLACK);
         g.fillRect(0,0,WINDOWWIDTH,WINDOWHEIGHT);
-        g.setColor(Color.BLUE);
-        g.fillOval(startX + tankX, startY + tankY,30,30);
+        g.setColor(c);
+        myTank.draw(g, startX, startY);
+
     }
 
     @Override
     public void update(Graphics g) {
-        if(offScreenImage == null){
-            offScreenImage =this.createImage(WINDOWWIDTH,WINDOWHEIGHT);
+        if (offScreenImage == null) {
+            offScreenImage = this.createImage(WINDOWWIDTH, WINDOWHEIGHT);
         }
         Graphics gImage = offScreenImage.getGraphics();
         //清屏
         paint(gImage);
-        g.drawImage(offScreenImage,0,0,null);
+        g.drawImage(offScreenImage, 0, 0, null);
 
     }
 
@@ -75,14 +74,14 @@ public class MainClient extends JFrame {
         mc.initWindow();
     }
 
-    private class PaintThread implements Runnable{
+    private class PaintThread implements Runnable {
 
         @Override
         public void run() {
-            while (true){
+            while (true) {
                 repaint();
                 try {
-                    Thread.sleep(200);
+                    Thread.sleep(30);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -90,23 +89,16 @@ public class MainClient extends JFrame {
         }
     }
 
-    private class KeyAdapter extends java.awt.event.KeyAdapter{
+    private class KeyAdapter extends java.awt.event.KeyAdapter {
 
         @Override
         public void keyPressed(KeyEvent e) {
-            if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-                tankX += 5;
-            }
-            if(e.getKeyCode() == KeyEvent.VK_LEFT){
-                tankX -= 5;
-            }
-            if(e.getKeyCode() == KeyEvent.VK_UP){
-                tankY -= 5;
-            }
-            if(e.getKeyCode() == KeyEvent.VK_DOWN){
-                tankY += 5;
-            }
-            System.out.println(e.getKeyCode() + " " + e.getKeyChar());
+            myTank.keyPressed(e);
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            myTank.keyReleased(e);
         }
     }
 
