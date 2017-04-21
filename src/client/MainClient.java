@@ -2,6 +2,7 @@ package client;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -15,6 +16,7 @@ public class MainClient extends JFrame {
     public static final int WINDOWWIDTH = 800;
     public static final int WINDOWHEIGHT = 600;
     public static final String TITLE = "TankWar";
+    Image offScreenImage = null;
     public int startY;
     public int startX;
 
@@ -38,29 +40,35 @@ public class MainClient extends JFrame {
                 System.exit(0);
             }
         });
-
+        this.addKeyListener(new KeyAdapter());
         new Thread(new PaintThread()).start();
-        new Thread().start();
     }
 
     @Override
     public void paint(Graphics g) {
         Color c = g.getColor();
-        //清屏
-        g.clearRect(0,0,WINDOWWIDTH,WINDOWHEIGHT);
         drawMyTank(g);
         g.setColor(c);
     }
 
     void drawMyTank(Graphics g){
-        //每次调取
-tankX ++;
-tankY ++;
-
+        g.setColor(Color.BLACK);
+        g.fillRect(0,0,WINDOWWIDTH,WINDOWHEIGHT);
         g.setColor(Color.BLUE);
         g.fillOval(startX + tankX, startY + tankY,30,30);
     }
 
+    @Override
+    public void update(Graphics g) {
+        if(offScreenImage == null){
+            offScreenImage =this.createImage(WINDOWWIDTH,WINDOWHEIGHT);
+        }
+        Graphics gImage = offScreenImage.getGraphics();
+        //清屏
+        paint(gImage);
+        g.drawImage(offScreenImage,0,0,null);
+
+    }
 
     public static void main(String[] args) {
         MainClient mc = new MainClient();
@@ -79,6 +87,26 @@ tankY ++;
                     e.printStackTrace();
                 }
             }
+        }
+    }
+
+    private class KeyAdapter extends java.awt.event.KeyAdapter{
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+                tankX += 5;
+            }
+            if(e.getKeyCode() == KeyEvent.VK_LEFT){
+                tankX -= 5;
+            }
+            if(e.getKeyCode() == KeyEvent.VK_UP){
+                tankY -= 5;
+            }
+            if(e.getKeyCode() == KeyEvent.VK_DOWN){
+                tankY += 5;
+            }
+            System.out.println(e.getKeyCode() + " " + e.getKeyChar());
         }
     }
 
