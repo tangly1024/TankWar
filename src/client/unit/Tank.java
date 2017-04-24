@@ -3,6 +3,7 @@ package client.unit;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * USER：tangly
@@ -24,7 +25,7 @@ public class Tank extends GameUnit {
     private boolean bR = false;
     private boolean bD = false;
 
-    java.util.List<Bullet> bulletList = new ArrayList();
+    List<Bullet> bulletList = new ArrayList();
 
     public Tank(int x, int y) {
         this.x = x;
@@ -73,10 +74,11 @@ public class Tank extends GameUnit {
         move(dir, xSpeed, ySpeed);
         Color c = g.getColor();
         g.setColor(Color.BLUE);
-
+        g.drawString("导弹数量 : "+bulletList.size(),offsetX+20,offsetY+20);
         g.fillOval(offsetX + x, offsetY + y, width, height); //坦克身体是一个圆
         g.setColor(Color.RED);
-        this.gun.draw(g, offsetX, offsetY);
+        //画出炮筒
+        gun.draw(g, offsetX, offsetY);
         //画出坦克的子弹
         for (Bullet bullet : bulletList) {
             //画子弹的偏移初始位置

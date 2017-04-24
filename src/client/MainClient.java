@@ -47,28 +47,26 @@ public class MainClient extends JFrame {
 
     @Override
     public void paint(Graphics g) {
-        drawMyTank(g);
-    }
 
-    void drawMyTank(Graphics g) {
-        Color c = g.getColor();
-        g.setColor(Color.BLACK);
-        g.fillRect(0,0,WINDOWWIDTH,WINDOWHEIGHT);
-        g.setColor(c);
-        myTank.draw(g, offsetX, offsetY);
-    }
-
-    @Override
-    public void update(Graphics g) {
         if (offScreenImage == null) {
             offScreenImage = this.createImage(WINDOWWIDTH, WINDOWHEIGHT);
         }
         Graphics gImage = offScreenImage.getGraphics();
         //清屏
-        paint(gImage);
-        g.drawImage(offScreenImage, 0, 0, null);
+        Color c = gImage.getColor();
+        gImage.setColor(Color.GREEN);
+        gImage.fillRect(0,0,WINDOWWIDTH,WINDOWHEIGHT);
+        gImage.setColor(c);
+        drawMyTank(gImage);
 
+        //将画布内容同步到屏幕上
+        g.drawImage(offScreenImage, 0, 0, null);
     }
+
+    void drawMyTank(Graphics g) {
+        myTank.draw(g, offsetX, offsetY);
+    }
+
 
     public static void main(String[] args) {
         MainClient mc = new MainClient();
