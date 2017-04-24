@@ -1,6 +1,4 @@
-package client;
-
-import client.util.Direction;
+package client.unit;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -11,16 +9,14 @@ import java.util.ArrayList;
  * DATE：2017/4/21
  * TIME：16:12
  */
-public class Tank {
-    private int x;
-    private int y;
-    private static final int XSPEED = 2;
-    private static final int YSPEED = 2;
+public class Tank extends GameUnit {
+
+    private int xSpeed = 2;
+    private int ySpeed = 2;
     private int width = 30;
     private int height = 30;
 
-
-    private Direction moveDir = Direction.STOP; // 移动方向
+    private Direction dir = Direction.STOP; // 移动方向
     private Gun gun = new Gun();
 
     private boolean bU = false;
@@ -74,7 +70,7 @@ public class Tank {
     }
 
     public void draw(Graphics g, int offsetX, int offsetY) {
-        move();
+        move(dir, xSpeed, ySpeed);
         Color c = g.getColor();
         g.setColor(Color.BLUE);
 
@@ -83,78 +79,43 @@ public class Tank {
         this.gun.draw(g, offsetX, offsetY);
         //画出坦克的子弹
         for (Bullet bullet : bulletList) {
-            bullet.draw(g, offsetX, offsetY);
+            //画子弹的偏移初始位置
+            bullet.draw(g, offsetX + width / 2 , offsetY + height / 2);
         }
         g.setColor(c);
     }
 
-    private void move() {
-//调试移动        System.out.println("U:"+bU+" D:"+bD+" L:"+bL+" R:"+bR+" moveDir:"+moveDir);
-        switch (moveDir) {
-            case L:
-                x -= XSPEED;
-                break;
-            case LU:
-                x -= XSPEED;
-                y -= YSPEED;
-                break;
-            case RU:
-                x += XSPEED;
-                y -= YSPEED;
-                break;
-            case R:
-                x += XSPEED;
-                break;
-            case RD:
-                x += XSPEED;
-                y += YSPEED;
-                break;
-            case D:
-                y += YSPEED;
-                break;
-            case LD:
-                x -= XSPEED;
-                y += YSPEED;
-                break;
-            case U:
-                y -= YSPEED;
-                break;
-            case STOP:
-                break;
-        }
-    }
-
     private void locateDirection() {
         if (!bL && !bR && !bU && !bD) {
-            moveDir = Direction.STOP;
+            dir = Direction.STOP;
         }
         if (!bL && !bR && !bU && bD) {
-            moveDir = Direction.D;
+            dir = Direction.D;
         }
         if (bL && !bR && !bU && !bD) {
-            moveDir = Direction.L;
+            dir = Direction.L;
         }
         if (!bL && bR && !bU && !bD) {
-            moveDir = Direction.R;
+            dir = Direction.R;
         }
         if (!bL && !bR && bU && !bD) {
-            moveDir = Direction.U;
+            dir = Direction.U;
         }
         if (bL && !bR && !bU && bD) {
-            moveDir = Direction.LD;
+            dir = Direction.LD;
         }
         if (bL && !bR && bU && !bD) {
-            moveDir = Direction.LU;
+            dir = Direction.LU;
         }
         if (!bL && bR && bU && !bD) {
-            moveDir = Direction.RU;
+            dir = Direction.RU;
         }
         if (!bL && bR && !bU && bD) {
-            moveDir = Direction.RD;
+            dir = Direction.RD;
         }
         //改变炮口方向
-        if (moveDir != Direction.STOP) {
-            this.gun.gunDir = moveDir;
+        if (dir != Direction.STOP) {
+            this.gun.gunDir = dir;
         }
     }
 
@@ -201,8 +162,8 @@ public class Tank {
         return y;
     }
 
-    public Direction getMoveDir() {
-        return moveDir;
+    public Direction getDir() {
+        return dir;
     }
 
     public Direction getGunDir() {
