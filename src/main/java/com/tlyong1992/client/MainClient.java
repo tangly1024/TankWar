@@ -1,4 +1,4 @@
-package client;
+package com.tlyong1992.client;
 
 import javax.swing.*;
 import java.awt.*;
@@ -67,11 +67,6 @@ public class MainClient extends JFrame {
         paint(gImage);
         g.drawImage(offScreenImage, 0, 0, null);
 
-    }
-
-    public static void main(String[] args) {
-        MainClient mc = new MainClient();
-        mc.initWindow();
     }
 
     private class PaintThread implements Runnable {

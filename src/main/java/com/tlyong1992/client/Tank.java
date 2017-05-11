@@ -1,4 +1,4 @@
-package client;
+package com.tlyong1992.client;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
