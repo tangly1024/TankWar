@@ -17,8 +17,8 @@ public class MainClient extends JFrame {
     public static final int WINDOWHEIGHT = 600;
     public static final String TITLE = "TankWar";
     Image offScreenImage = null;
-    public int startY;
-    public int startX;
+    public int offsetY; //窗口边沿偏移值
+    public int offsetX; //窗口边沿偏移值
 
     Tank myTank;
 
@@ -29,8 +29,8 @@ public class MainClient extends JFrame {
         this.setVisible(true);
 //        this.setResizable(false); //不可缩放窗口
         this.setLocation(300, 200);
-        startY = WINDOWHEIGHT - this.getContentPane().getHeight();
-        startX = WINDOWWIDTH - this.getContentPane().getWidth();
+        offsetY = WINDOWHEIGHT - this.getContentPane().getHeight();
+        offsetX = WINDOWWIDTH - this.getContentPane().getWidth();
         myTank = new Tank(0, 0);
         //AddListener
         this.addWindowListener(new WindowAdapter() {
@@ -53,8 +53,7 @@ public class MainClient extends JFrame {
         g.setColor(Color.BLACK);
         g.fillRect(0,0,WINDOWWIDTH,WINDOWHEIGHT);
         g.setColor(c);
-        myTank.draw(g, startX, startY);
-
+        myTank.draw(g, offsetX, offsetY);
     }
 
     @Override
