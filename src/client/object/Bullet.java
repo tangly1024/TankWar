@@ -1,4 +1,4 @@
-package client.unit;
+package client.object;
 
 import java.awt.*;
 
@@ -7,19 +7,16 @@ import java.awt.*;
  * DATE：2017/4/24
  * TIME：13:46
  */
-public class Bullet extends GameUnit {
+public class Bullet extends GameObject {
 
     private Tank tank;//引用发出这颗子弹的坦克
     private int width = 5;
     private int height = 5;
     private int XSPEED = 4;
     private int YSPEED = 5;
-    private Direction dir = Direction.D; // 移动方向
 
     public Bullet(Tank tank) {
-        this.tank = tank;
-        this.x = tank.getX();
-        this.y = tank.getY();
+        super(tank.getX(),tank.getY(),4,5);
         this.dir = tank.getGunDir();
     }
 
@@ -27,7 +24,7 @@ public class Bullet extends GameUnit {
     public void draw(Graphics g, int offsetX, int offsetY) {
         Color c = g.getColor();
         g.setColor(Color.RED);
-        move(dir,XSPEED,YSPEED);
+        move();
         g.fillOval(offsetX + x, offsetY + y, width, height);
         g.setColor(c);
     }

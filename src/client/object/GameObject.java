@@ -1,16 +1,28 @@
-package client.unit;
+package client.object;
+
+import client.constant.Direction;
 
 /**
  * USER：tangly
  * DATE：2017/4/24
  * TIME：15:12
  */
-public class GameUnit {
+public class GameObject {
     protected int x;
     protected int y;
+    protected int xSpeed;
+    protected int ySpeed;
+    protected Direction dir = Direction.STOP;//移动方向
+
+    public GameObject(int x, int y, int xSpeed, int ySpeed) {
+        this.x = x;
+        this.y = y;
+        this.xSpeed = xSpeed;
+        this.ySpeed = ySpeed;
+    }
 
     //处理物体移动的函数
-    protected void move(Direction dir, int xSpeed, int ySpeed) {
+    public void move() {
         switch (dir) {
             case L:
                 x -= xSpeed;

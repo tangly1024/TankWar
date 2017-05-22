@@ -1,4 +1,6 @@
-package client.unit;
+package client.object;
+
+import client.constant.Direction;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -10,16 +12,14 @@ import java.util.List;
  * DATE：2017/4/21
  * TIME：16:12
  */
-public class Tank extends GameUnit {
+public class Tank extends GameObject {
 
-    private int xSpeed = 2;
-    private int ySpeed = 2;
     private int width = 30;
     private int height = 30;
 
-    private Direction dir = Direction.STOP; // 移动方向
-    private Gun gun = new Gun();
+    private boolean bGood;
 
+    private Gun gun = new Gun();
     private boolean bU = false;
     private boolean bL = false;
     private boolean bR = false;
@@ -27,9 +27,9 @@ public class Tank extends GameUnit {
 
     List<Bullet> bulletList = new ArrayList();
 
-    public Tank(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Tank(int x, int y, boolean bGood) {
+        super(x, y, 2, 2);
+        this.bGood = bGood;
     }
 
     //坦克的炮筒是一个内部类
@@ -71,10 +71,14 @@ public class Tank extends GameUnit {
     }
 
     public void draw(Graphics g, int offsetX, int offsetY) {
-        move(dir, xSpeed, ySpeed);
+
         Color c = g.getColor();
-        g.setColor(Color.BLUE);
-        g.drawString("导弹数量 : "+bulletList.size(),offsetX+20,offsetY+20);
+        if (this.bGood) {
+            g.setColor(Color.BLUE);
+        } else {
+            g.setColor(Color.GREEN);
+        }
+        g.drawString("导弹数量 : " + bulletList.size(), offsetX + 20, offsetY + 20);
         g.fillOval(offsetX + x, offsetY + y, width, height); //坦克身体是一个圆
         g.setColor(Color.RED);
         //画出炮筒
@@ -82,7 +86,7 @@ public class Tank extends GameUnit {
         //画出坦克的子弹
         for (Bullet bullet : bulletList) {
             //画子弹的偏移初始位置
-            bullet.draw(g, offsetX + width / 2 , offsetY + height / 2);
+            bullet.draw(g, offsetX + width / 2, offsetY + height / 2);
         }
         g.setColor(c);
     }

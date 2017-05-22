@@ -1,12 +1,14 @@
 package client;
 
-import client.unit.Tank;
+import client.object.GameObject;
+import client.object.Tank;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 /**
  * USER：tangly
@@ -22,18 +24,18 @@ public class MainClient extends JFrame {
     public int offsetY; //窗口边沿偏移值
     public int offsetX; //窗口边沿偏移值
 
+    java.util.List<GameObject> objectList;
     Tank myTank;
-
+    Tank enemy;
 
     public void initWindow() {
         this.setSize(WINDOWWIDTH, WINDOWHEIGHT);
         this.setTitle(TITLE);
         this.setVisible(true);
-//        this.setResizable(false); //不可缩放窗口
+//      this.setResizable(false); //不可缩放窗口
         this.setLocation(300, 200);
         offsetY = WINDOWHEIGHT - this.getContentPane().getHeight();
         offsetX = WINDOWWIDTH - this.getContentPane().getWidth();
-        myTank = new Tank(0, 0);
         //AddListener
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -42,7 +44,19 @@ public class MainClient extends JFrame {
             }
         });
         this.addKeyListener(new KeyAdapter());
+
+        createObject();
         new Thread(new PaintThread()).start();
+        new Thread(new ObjectThread()).start();
+
+    }
+
+    private void createObject() {
+        objectList = new ArrayList<>();
+        myTank = new Tank(0, 0, true);
+        enemy = new Tank(20, 20, false);
+        objectList.add(myTank);
+        objectList.add(enemy);
     }
 
     @Override
@@ -53,26 +67,39 @@ public class MainClient extends JFrame {
         }
         Graphics gImage = offScreenImage.getGraphics();
         //清屏
-        Color c = gImage.getColor();
-        gImage.setColor(Color.GREEN);
-        gImage.fillRect(0,0,WINDOWWIDTH,WINDOWHEIGHT);
-        gImage.setColor(c);
-        drawMyTank(gImage);
+        drawBackgroud(gImage);
+        drawTank(gImage);
 
         //将画布内容同步到屏幕上
         g.drawImage(offScreenImage, 0, 0, null);
     }
 
-    void drawMyTank(Graphics g) {
-        myTank.draw(g, offsetX, offsetY);
+    private void drawBackgroud(Graphics gImage) {
+        Color c = gImage.getColor();
+        gImage.setColor(Color.black);
+        gImage.fillRect(0, 0, WINDOWWIDTH, WINDOWHEIGHT);
+        gImage.setColor(c);
     }
 
+    void drawTank(Graphics g) {
+        myTank.draw(g, offsetX, offsetY);
+        enemy.draw(g, offsetX, offsetY);
+    }
+
+    void moveAll() {
+        for (GameObject moveObject : objectList) {
+            moveObject.move();
+        }
+    }
 
     public static void main(String[] args) {
         MainClient mc = new MainClient();
         mc.initWindow();
     }
 
+    /**
+     * 绘图线程
+     */
     private class PaintThread implements Runnable {
 
         @Override
@@ -87,6 +114,25 @@ public class MainClient extends JFrame {
             }
         }
     }
+
+    /**
+     * 对象管理线程
+     */
+    private class ObjectThread implements Runnable {
+
+        @Override
+        public void run() {
+            while (true) {
+                moveAll();
+                try {
+                    Thread.sleep(30);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
 
     private class KeyAdapter extends java.awt.event.KeyAdapter {
 
