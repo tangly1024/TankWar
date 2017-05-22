@@ -1,7 +1,7 @@
-package com.tlyong1992.client.object;
+package com.tlyong1992.client.model;
 
 import com.tlyong1992.client.constant.Direction;
-import com.tlyong1992.client.controller.Constant;
+import com.tlyong1992.client.constant.Constant;
 import com.tlyong1992.client.view.MainView;
 
 import java.awt.*;
@@ -47,11 +47,11 @@ public class Tank extends BaseObject {
         //画出炮筒
         gun.draw(g, mainView.getOffsetX(), mainView.getOffsetY());
         //TODO 画出坦克的子弹
-//        for (Bullet bullet : bulletList) {
-//            //画子弹的偏移初始位置
-//            //画子弹的偏移初始位置
-//            bullet.draw(g, offsetX + width / 2, offsetY + height / 2);
-//        }
+        for (Bullet bullet : bulletList) {
+            //画子弹的偏移初始位置
+            //画子弹的偏移初始位置
+            bullet.draw(g, mainView);
+        }
         g.setColor(c);
     }
 

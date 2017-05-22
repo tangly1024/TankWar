@@ -1,4 +1,4 @@
-package com.tlyong1992.client.object;
+package com.tlyong1992.client.model;
 
 import com.tlyong1992.client.constant.Direction;
 import com.tlyong1992.client.view.MainView;
@@ -35,6 +35,14 @@ public abstract class BaseObject {
 
     public int getPositionY() {
         return positionY;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     public abstract void draw(Graphics g, MainView mainView);

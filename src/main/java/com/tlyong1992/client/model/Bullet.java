@@ -1,4 +1,4 @@
-package com.tlyong1992.client.object;
+package com.tlyong1992.client.model;
 
 import com.tlyong1992.client.view.MainView;
 
@@ -23,12 +23,9 @@ public class Bullet extends BaseObject {
     public void draw(Graphics g, MainView mainView) {
         Color c = g.getColor();
         g.setColor(Color.RED);
-        g.fillOval(mainView.getOffsetX() + positionX, mainView.getOffsetY() + positionY, width, height);
+        g.fillOval(tank.getWidth() / 2 + mainView.getOffsetX() + positionX, tank.getHeight() / 2 + mainView.getOffsetY() + positionY, width, height);
         g.setColor(c);
         move();
     }
 
-    public Tank getTank() {
-        return tank;
-    }
 }
