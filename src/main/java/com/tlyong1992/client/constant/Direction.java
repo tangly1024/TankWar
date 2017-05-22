@@ -1,4 +1,4 @@
-package client.constant;
+package com.tlyong1992.client.constant;
 
 /**
  * USER：tangly

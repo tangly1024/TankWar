@@ -1,8 +1,10 @@
-package client.view;
+package com.tlyong1992.client.view;
 
-import client.object.GameObject;
-import client.object.Tank;
+import com.tlyong1992.client.controller.Constant;
+import com.tlyong1992.client.object.BaseObject;
+import com.tlyong1992.client.object.Tank;
 
+import javax.annotation.PostConstruct;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -15,19 +17,21 @@ import java.util.ArrayList;
  * DATE：2017/4/21
  * TIME：10:40
  */
-public class MainClient extends JFrame {
+@org.springframework.stereotype.Component
+public class MainView extends JFrame {
 
-    public static final int WINDOWWIDTH = 800;
-    public static final int WINDOWHEIGHT = 600;
-    public static final String TITLE = "TankWar";
+    private static final int WINDOWWIDTH = 800;
+    private static final int WINDOWHEIGHT = 600;
+    private static final String TITLE = "TankWar";
     Image offScreenImage = null;
-    public int offsetY; //窗口边沿偏移值
-    public int offsetX; //窗口边沿偏移值
+    private int offsetY; //窗口边沿偏移值
+    private int offsetX; //窗口边沿偏移值
 
-    java.util.List<GameObject> objectList;
+    java.util.List<BaseObject> objectList;
     Tank myTank;
     Tank enemy;
 
+    @PostConstruct
     public void initWindow() {
         this.setSize(WINDOWWIDTH, WINDOWHEIGHT);
         this.setTitle(TITLE);
@@ -53,8 +57,8 @@ public class MainClient extends JFrame {
 
     private void createObject() {
         objectList = new ArrayList();
-        myTank = new Tank(0, 0, true);
-        enemy = new Tank(20, 20, false);
+        myTank = new Tank(true,Constant.TANK_POSITION_DEFAULT_X, Constant.TANK_POSITION_DEFAULT_Y, Constant.TANK_MOVE_SPEED_X, Constant.TANK_MOVE_SPEED_Y,Constant.TANK_WIDTH,Constant.TANK_HEIGHT);
+        enemy = new Tank(true,100, 100, Constant.TANK_MOVE_SPEED_X, Constant.TANK_MOVE_SPEED_Y,Constant.TANK_WIDTH,Constant.TANK_HEIGHT);
         objectList.add(myTank);
         objectList.add(enemy);
     }
@@ -82,18 +86,18 @@ public class MainClient extends JFrame {
     }
 
     void drawTank(Graphics g) {
-        myTank.draw(g, offsetX, offsetY);
-        enemy.draw(g, offsetX, offsetY);
+        myTank.draw(g, this);
+        enemy.draw(g, this);
     }
 
     void moveAll() {
-        for (GameObject moveObject : objectList) {
+        for (BaseObject moveObject : objectList) {
             moveObject.move();
         }
     }
 
     public static void main(String[] args) {
-        MainClient mc = new MainClient();
+        MainView mc = new MainView();
         mc.initWindow();
     }
 
@@ -141,6 +145,23 @@ public class MainClient extends JFrame {
         public void keyReleased(KeyEvent e) {
             myTank.keyReleased(e);
         }
+    }
+
+
+    public int getOffsetY() {
+        return offsetY;
+    }
+
+    public void setOffsetY(int offsetY) {
+        this.offsetY = offsetY;
+    }
+
+    public int getOffsetX() {
+        return offsetX;
+    }
+
+    public void setOffsetX(int offsetX) {
+        this.offsetX = offsetX;
     }
 
 }
