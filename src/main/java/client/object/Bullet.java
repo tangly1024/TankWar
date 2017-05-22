@@ -9,13 +9,13 @@ import java.awt.*;
  */
 public class Bullet extends GameObject {
 
-    private Tank tank;//引用发出这颗子弹的坦克
+    private client.object.Tank tank;//引用发出这颗子弹的坦克
     private int width = 5;
     private int height = 5;
     private int XSPEED = 4;
     private int YSPEED = 5;
 
-    public Bullet(Tank tank) {
+    public Bullet(client.object.Tank tank) {
         super(tank.getX(),tank.getY(),4,5);
         this.dir = tank.getGunDir();
     }

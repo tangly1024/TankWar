@@ -1,4 +1,4 @@
-package client;
+package client.view;
 
 import client.object.GameObject;
 import client.object.Tank;
@@ -52,7 +52,7 @@ public class MainClient extends JFrame {
     }
 
     private void createObject() {
-        objectList = new ArrayList<>();
+        objectList = new ArrayList();
         myTank = new Tank(0, 0, true);
         enemy = new Tank(20, 20, false);
         objectList.add(myTank);
@@ -67,14 +67,14 @@ public class MainClient extends JFrame {
         }
         Graphics gImage = offScreenImage.getGraphics();
         //清屏
-        drawBackgroud(gImage);
+        drawBackground(gImage);
         drawTank(gImage);
 
         //将画布内容同步到屏幕上
         g.drawImage(offScreenImage, 0, 0, null);
     }
 
-    private void drawBackgroud(Graphics gImage) {
+    private void drawBackground(Graphics gImage) {
         Color c = gImage.getColor();
         gImage.setColor(Color.black);
         gImage.fillRect(0, 0, WINDOWWIDTH, WINDOWHEIGHT);
@@ -101,8 +101,6 @@ public class MainClient extends JFrame {
      * 绘图线程
      */
     private class PaintThread implements Runnable {
-
-        @Override
         public void run() {
             while (true) {
                 repaint();
@@ -119,8 +117,6 @@ public class MainClient extends JFrame {
      * 对象管理线程
      */
     private class ObjectThread implements Runnable {
-
-        @Override
         public void run() {
             while (true) {
                 moveAll();
