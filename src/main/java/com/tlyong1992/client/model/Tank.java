@@ -29,9 +29,10 @@ public class Tank extends BaseObject {
 
     List<Bullet> bulletList = new ArrayList();
 
-    public Tank(boolean bGood, int x, int y, int tankMoveSpeedX, int tankMoveSpeedY, int tankWidth, int tankHeight) {
+    public Tank(boolean bGood, int x, int y, int tankMoveSpeedX, int tankMoveSpeedY, int tankWidth, int tankHeight , Direction dir) {
         super(x, y, tankMoveSpeedX, tankMoveSpeedY, tankWidth, tankHeight);
         this.bGood = bGood;
+        this.dir = dir;
     }
 
     public void draw(Graphics g, MainView mainView) {

@@ -17,7 +17,6 @@ public enum Direction {
 
     R("右"),
 
-
     RD("右下"),
 
     D("下"),

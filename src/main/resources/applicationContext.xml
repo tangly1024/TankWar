@@ -25,8 +25,9 @@
             </list>
         </property>
     </bean>
+
     <!-- 线程池 -->
-    <bean id="padTaskexecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+    <bean id="mainExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
         <property name="corePoolSize" value="#{T(java.lang.Runtime).getRuntime().availableProcessors()}"></property>
         <property name="maxPoolSize"
                   value="#{T(java.lang.Runtime).getRuntime().availableProcessors()*2+1}"/><!-- 最大线程 -->

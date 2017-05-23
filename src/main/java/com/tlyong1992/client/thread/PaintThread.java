@@ -1,6 +1,7 @@
 package com.tlyong1992.client.thread;
 
-import javax.swing.*;
+import com.tlyong1992.client.view.MainView;
+import org.apache.log4j.Logger;
 
 /**
  * 绘图线程
@@ -10,14 +11,17 @@ import javax.swing.*;
  */
 public class PaintThread implements Runnable {
 
-    private JFrame frame;
+    Logger logger = Logger.getLogger(this.getClass());
 
-    public PaintThread(JFrame frame) {
+    private MainView frame;
+
+    public PaintThread(MainView frame) {
         this.frame = frame;
     }
 
     @Override
     public void run() {
+        logger.info("启动绘图线程");
         while (true) {
             frame.repaint();
             try {

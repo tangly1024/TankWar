@@ -1,20 +1,14 @@
 package com.tlyong1992.client.view;
 
 import com.tlyong1992.client.constant.Constant;
-import com.tlyong1992.client.model.BaseObject;
 import com.tlyong1992.client.model.Tank;
-import com.tlyong1992.client.thread.EventThread;
-import com.tlyong1992.client.thread.PaintThread;
+import com.tlyong1992.client.repository.ObjectManager;
 
-import javax.annotation.PostConstruct;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * USER：tangly
@@ -24,28 +18,24 @@ import java.util.concurrent.Executors;
 @org.springframework.stereotype.Component
 public class MainView extends JFrame {
 
-    private static final int WINDOWWIDTH = 800;
-    private static final int WINDOWHEIGHT = 600;
-    private static final String TITLE = "TankWar";
-    Image offScreenImage = null;
+    private int windowWidth = Constant.WINDOW_WIDTH;
+    private int windowHeight = Constant.WINDOW_HEIGHT;
+    private int windowPositionX = Constant.WINDOW_POSITION_X;
+    private int windowPositionY = Constant.WINDOW_POSITION_Y;
+    private String TITLE = Constant.WINDOW_TITLE;
     private int offsetY; //窗口边沿偏移值
     private int offsetX; //窗口边沿偏移值
 
-    ExecutorService executorService = Executors.newFixedThreadPool(10);
+    Image offScreenImage = null;
 
-    java.util.List<BaseObject> objectList;
-    Tank myTank;
-    Tank enemy;
-
-    @PostConstruct
     public void initWindow() {
-        this.setSize(WINDOWWIDTH, WINDOWHEIGHT);
+        this.setSize(windowWidth, windowHeight);
         this.setTitle(TITLE);
         this.setVisible(true);
 //      this.setResizable(false); //不可缩放窗口
-        this.setLocation(300, 200);
-        offsetY = WINDOWHEIGHT - this.getContentPane().getHeight();
-        offsetX = WINDOWWIDTH - this.getContentPane().getWidth();
+        this.setLocation(windowPositionX, windowPositionY);
+        offsetY = windowHeight - this.getContentPane().getHeight();
+        offsetX = windowWidth - this.getContentPane().getWidth();
         //AddListener
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -54,27 +44,23 @@ public class MainView extends JFrame {
             }
         });
         this.addKeyListener(new KeyAdapter());
-
-        createObject();
-
-        executorService.submit(new PaintThread(this));
-        executorService.submit(new EventThread(objectList));
+//        createObject();
 
     }
 
-    private void createObject() {
-        objectList = new ArrayList();
-        myTank = new Tank(true,Constant.TANK_POSITION_DEFAULT_X, Constant.TANK_POSITION_DEFAULT_Y, Constant.TANK_MOVE_SPEED_X, Constant.TANK_MOVE_SPEED_Y,Constant.TANK_WIDTH,Constant.TANK_HEIGHT);
-        enemy = new Tank(true,100, 100, Constant.TANK_MOVE_SPEED_X, Constant.TANK_MOVE_SPEED_Y,Constant.TANK_WIDTH,Constant.TANK_HEIGHT);
-        objectList.add(myTank);
-        objectList.add(enemy);
-    }
+//    private void createObject() {
+//        objectList = new ArrayList();
+////        myTank = TankFactory.getDefaulMyTank();
+////        enemy = TankFactory.getEnmemyTank();
+////        objectList.add(myTank);
+////        objectList.add(enemy);
+//    }
 
     @Override
     public void paint(Graphics g) {
 
         if (offScreenImage == null) {
-            offScreenImage = this.createImage(WINDOWWIDTH, WINDOWHEIGHT);
+            offScreenImage = this.createImage(windowWidth, windowHeight);
         }
         Graphics gImage = offScreenImage.getGraphics();
         //清屏
@@ -88,25 +74,29 @@ public class MainView extends JFrame {
     private void drawBackground(Graphics gImage) {
         Color c = gImage.getColor();
         gImage.setColor(Color.black);
-        gImage.fillRect(0, 0, WINDOWWIDTH, WINDOWHEIGHT);
+        gImage.fillRect(0, 0, windowWidth, windowHeight);
         gImage.setColor(c);
     }
 
     void drawObject(Graphics g) {
-        myTank.draw(g, this);
-        enemy.draw(g, this);
+
+        ObjectManager.singleTon.getMyTank().draw(g, this);
+        for(Tank enemyTank : ObjectManager.singleTon.getEnemyTankList()){
+            enemyTank.draw(g,this);
+        }
+
     }
 
     private class KeyAdapter extends java.awt.event.KeyAdapter {
 
         @Override
         public void keyPressed(KeyEvent e) {
-            myTank.keyPressed(e);
+            ObjectManager.singleTon.getMyTank().keyPressed(e);
         }
 
         @Override
         public void keyReleased(KeyEvent e) {
-            myTank.keyReleased(e);
+            ObjectManager.singleTon.getMyTank().keyReleased(e);
         }
     }
 

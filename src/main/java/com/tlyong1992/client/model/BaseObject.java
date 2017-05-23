@@ -18,9 +18,9 @@ public abstract class BaseObject {
     protected int speedY;
     protected int width;
     protected int height;
-    protected Direction dir = Direction.STOP;//移动方向
+    protected Direction dir;//移动方向
 
-    public BaseObject(int x, int y, int xSpeed, int ySpeed, int width,int height) {
+    public BaseObject(int x, int y, int xSpeed, int ySpeed, int width, int height) {
         this.positionX = x;
         this.positionY = y;
         this.speedX = xSpeed;
