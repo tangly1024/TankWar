@@ -74,9 +74,9 @@ public class MainView extends JFrame {
         gImage.drawLine(offsetX, offsetY, windowWidth - offsetX, offsetY);
         //底部水平线
         gImage.drawLine(offsetX, windowHeight - 2 * (offsetY - titleBsrHeight), windowWidth - offsetX, windowHeight - 2 * (offsetY - +titleBsrHeight));
-        //左侧水平线
+        //左侧垂直线
         gImage.drawLine(offsetX,offsetY,offsetX, windowHeight - 2 * (offsetY - titleBsrHeight));
-        //右侧水平线
+        //右侧垂直线
         gImage.drawLine(windowWidth - offsetX, offsetY,windowWidth - offsetX, windowHeight - 2 * (offsetY - +titleBsrHeight));
 
         gImage.setColor(c);

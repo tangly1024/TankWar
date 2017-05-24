@@ -51,54 +51,54 @@ public abstract class BaseObject {
     public void move(MainView mainView) {
         switch (dir) {
             case L:
-                if(positionX > 0 ){
+                if(positionX - mainView.getOffsetX() > 0 ){
                     positionX -= speedX;
                 }
                 break;
             case LU:
-                if(positionX > 0 ){
+                if(positionX - mainView.getOffsetX() > 0 ){
                     positionX -= speedX;
                 }
-                if(positionY > 0){
+                if(positionY - mainView.getOffsetY() > 0){
                     positionY -= speedY;
                 }
                 break;
             case RU:
-                if(positionX + mainView.getOffsetX() + width < mainView.getWidth() - mainView.getOffsetX() ){
+                if(positionX + width + mainView.getOffsetX()  < mainView.getWidth() ){
                     positionX += speedX;
                 }
-                if(positionY > 0){
+                if(positionY - mainView.getOffsetY() > 0){
                     positionY -= speedY;
                 }
                 break;
             case R:
-                if(positionX + mainView.getOffsetX() + width < mainView.getWidth() - mainView.getOffsetX() ){
+                if(positionX + width + mainView.getOffsetX()  < mainView.getWidth() ){
                     positionX += speedX;
                 }
                 break;
             case RD:
-                if(positionX + mainView.getOffsetX() + width < mainView.getWidth() - mainView.getOffsetX() ){
+                if(positionX + width + mainView.getOffsetX()  < mainView.getWidth() ){
                     positionX += speedX;
                 }
-                if(positionY + height + mainView.getOffsetY() + 2 * ( mainView.getOffsetY() - mainView.getTitleBsrHeight())  < mainView.getHeight()){
+                if(positionY + height + 2 * (mainView.getOffsetY() - mainView.getTitleBsrHeight())  < mainView.getHeight()){
                     positionY += speedY;
                 }
                 break;
             case D:
-                if(positionY + height + mainView.getOffsetY() + 2 * ( mainView.getOffsetY() - mainView.getTitleBsrHeight())  < mainView.getHeight()){
+                if(positionY + height + 2 * (mainView.getOffsetY() - mainView.getTitleBsrHeight())  < mainView.getHeight()){
                     positionY += speedY;
                 }
                 break;
             case LD:
-                if(positionX > 0 ){
+                if(positionX - mainView.getOffsetX() > 0 ){
                     positionX -= speedX;
                 }
-                if(positionY + height + mainView.getOffsetY() + 2 * ( mainView.getOffsetY() - mainView.getTitleBsrHeight())  < mainView.getHeight()){
+                if(positionY + height + 2 * (mainView.getOffsetY() - mainView.getTitleBsrHeight())  < mainView.getHeight()){
                     positionY += speedY;
                 }
                 break;
             case U:
-                if(positionY > 0){
+                if(positionY - mainView.getOffsetY() > 0){
                     positionY -= speedY;
                 }
                 break;

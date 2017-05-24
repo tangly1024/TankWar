@@ -41,7 +41,7 @@ public class MainController {
         BaseTank myTank = tankFactory.getDefaulMyTank();
         objectManager.singleTon.setMyTank(myTank);
         Random rand = new Random();
-        for (int i = 0; i <= 10; i++) {
+        for (int i = 0; i <= 1; i++) {
             Direction dir = Direction.values()[rand.nextInt(8)];
             EnemyTank enemyTank = tankFactory.getEnmemyTank(rand.nextInt(Constant.WINDOW_WIDTH - 100), rand.nextInt(Constant.WINDOW_HEIGHT - 100), dir);
             objectManager.singleTon.getEnemyTankList().add(enemyTank);

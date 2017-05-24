@@ -8,10 +8,11 @@ package com.tlyong1992.client.constant;
 public class Constant {
 
     public static String WINDOW_TITLE = "TankWar";
-    public static int WINDOW_POSITION_X = 200;
+    public static int WINDOW_POSITION_X = 600;
     public static int WINDOW_POSITION_Y = 300;
-    public static int TANK_POSITION_DEFAULT_X = 2;
-    public static int TANK_POSITION_DEFAULT_Y = 2;
+
+    public static int TANK_POSITION_DEFAULT_X = 500;
+    public static int TANK_POSITION_DEFAULT_Y = 500;
     public static int TANK_MOVE_SPEED_X = 2;
     public static int TANK_MOVE_SPEED_Y = 2;
     public static int TANK_WIDTH = 30;

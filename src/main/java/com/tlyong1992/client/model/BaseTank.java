@@ -47,11 +47,12 @@ public class BaseTank extends BaseObject {
         } else {
             g.setColor(Color.GREEN);
         }
-        g.drawString("导弹数量 : " + bulletList.size(), mainView.getOffsetX() + 20, mainView.getOffsetY() + 20);
-        g.fillOval(mainView.getOffsetX() + positionX, mainView.getOffsetY() + positionY, width, height); //坦克身体是一个圆
+//        g.drawString("导弹数量 : " + bulletList.size(), mainView.getOffsetX() + 20, mainView.getOffsetY() + 20);
+//        g.fillOval(mainView.getOffsetX() + positionX, mainView.getOffsetY() + positionY, width, height); //坦克身体是一个圆
+        g.fillOval(positionX, positionY, width, height); //坦克身体是一个圆
         g.setColor(Color.RED);
         //画出炮筒
-        gun.draw(g, mainView.getOffsetX(), mainView.getOffsetY());
+        gun.draw(g);
         //TODO 画出坦克的子弹
         for (Bullet bullet : bulletList) {
             bullet.draw(g, mainView);
@@ -63,31 +64,31 @@ public class BaseTank extends BaseObject {
     //坦克的炮筒是一个内部类
     private class Gun {
         Direction gunDir = Direction.U; //炮口方向
-        void draw(Graphics g, int startX, int startY) {
+        void draw(Graphics g) {
             switch (gunDir) {
                 case L:
-                    g.drawLine(startX + positionX, startY + positionY + height / 2, startX + positionX + width / 2, startY + positionY + height / 2);
+                    g.drawLine( positionX,  positionY + height / 2,  positionX + width / 2,  positionY + height / 2);
                     break;
                 case LU:
-                    g.drawLine((int) (startX + positionX + (width / 2) - (width / 2) / Math.sqrt(2)) - 3, (int) (startY + positionY + (height / 2) / Math.sqrt(2)) - 5, startX + positionX + width / 2, startY + positionY + height / 2);
+                    g.drawLine((int) ( positionX + (width / 2) - (width / 2) / Math.sqrt(2)) - 3, (int) ( positionY + (height / 2) / Math.sqrt(2)) - 5,  positionX + width / 2,  positionY + height / 2);
                     break;
                 case U:
-                    g.drawLine(startX + positionX + (width / 2), startY + positionY, startX + positionX + width / 2, startY + positionY + height / 2);
+                    g.drawLine( positionX + (width / 2),  positionY,  positionX + width / 2,  positionY + height / 2);
                     break;
                 case RU:
-                    g.drawLine((int) (startX + positionX + (width / 2) + (width / 2) / Math.sqrt(2) + 3), (int) (startY + positionY + (height / 2) / Math.sqrt(2)) - 5, startX + positionX + width / 2, startY + positionY + height / 2);
+                    g.drawLine((int) ( positionX + (width / 2) + (width / 2) / Math.sqrt(2) + 3), (int) ( positionY + (height / 2) / Math.sqrt(2)) - 5,  positionX + width / 2,  positionY + height / 2);
                     break;
                 case R:
-                    g.drawLine(startX + positionX + width, startY + positionY + height / 2, startX + positionX + width / 2, startY + positionY + height / 2);
+                    g.drawLine( positionX + width,  positionY + height / 2,  positionX + width / 2,  positionY + height / 2);
                     break;
                 case RD:
-                    g.drawLine((int) (startX + positionX + (width / 2) + (width / 2) / Math.sqrt(2)), (int) (startY + positionY + height / 2 + (height / 2) / Math.sqrt(2) + 2), startX + positionX + width / 2, startY + positionY + height / 2);
+                    g.drawLine((int) ( positionX + (width / 2) + (width / 2) / Math.sqrt(2)), (int) ( positionY + height / 2 + (height / 2) / Math.sqrt(2) + 2),  positionX + width / 2,  positionY + height / 2);
                     break;
                 case D:
-                    g.drawLine(startX + positionX + width / 2, startY + positionY + height, startX + positionX + width / 2, startY + positionY + height / 2);
+                    g.drawLine( positionX + width / 2,  positionY + height,  positionX + width / 2,  positionY + height / 2);
                     break;
                 case LD:
-                    g.drawLine((int) (startX + positionX + (width / 2) - (width / 2) / Math.sqrt(2)), (int) (startY + positionY + height / 2 + (height / 2) / Math.sqrt(2) + 2), startX + positionX + width / 2, startY + positionY + height / 2);
+                    g.drawLine((int) ( positionX + (width / 2) - (width / 2) / Math.sqrt(2)), (int) ( positionY + height / 2 + (height / 2) / Math.sqrt(2) + 2),  positionX + width / 2,  positionY + height / 2);
                     break;
                 case STOP:
                     break;
