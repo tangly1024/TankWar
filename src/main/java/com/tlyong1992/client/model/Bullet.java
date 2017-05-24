@@ -15,6 +15,10 @@ public class Bullet extends BaseObject {
 
     boolean live = true;
 
+    public void setLive(boolean live) {
+        this.live = live;
+    }
+
     public Bullet(BaseTank tank, int speedX, int speedY, int width, int height) {
         super(tank.getPositionX(), tank.getPositionY(), speedX, speedY, width, height);
         this.tank = tank;

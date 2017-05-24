@@ -1,10 +1,13 @@
 package com.tlyong1992.client.thread;
 
 import com.tlyong1992.client.model.BaseTank;
+import com.tlyong1992.client.model.Bullet;
 import com.tlyong1992.client.model.EnemyTank;
+import com.tlyong1992.client.repository.ObjectManager;
 import com.tlyong1992.client.view.MainView;
 import org.apache.log4j.Logger;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -23,7 +26,7 @@ public class EventThread implements Runnable {
 
     MainView mainView;
 
-    public EventThread(MainView mainView , BaseTank myTank , List<EnemyTank> objectList) {
+    public EventThread(MainView mainView, BaseTank myTank, List<EnemyTank> objectList) {
         this.mainView = mainView;
         this.myTank = myTank;
         this.tankList = objectList;
@@ -34,7 +37,7 @@ public class EventThread implements Runnable {
         logger.info("启动事件处理线程");
         while (true) {
             handleMove();
-            handleBullet();
+            handleAttack();
             try {
                 Thread.sleep(30);
             } catch (InterruptedException e) {
@@ -46,8 +49,20 @@ public class EventThread implements Runnable {
     /**
      * 处理武器的碰撞
      */
-    private void handleBullet() {
+    private void handleAttack() {
         //TODO
+        Iterator<EnemyTank> it = ObjectManager.singleTon.getEnemyTankList().iterator();
+        while(it.hasNext()){
+            EnemyTank enemy = it.next();
+            for (Bullet bullet : myTank.getBulletList()) {
+                if (enemy.getRect().intersects(bullet.getRect())) {
+                    System.out.println("发生碰撞");
+                    enemy.setLive(false);
+                    it.remove();
+                    bullet.setLive(false);
+                }
+            }
+        }
     }
 
     /**

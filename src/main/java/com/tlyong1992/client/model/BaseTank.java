@@ -21,7 +21,18 @@ public class BaseTank extends BaseObject {
     private int width = 30;
     private int height = 30;
 
-    private boolean bGood;
+    private boolean good;
+    private boolean live;
+
+    public boolean isGood() {
+        return good;
+    }
+    public boolean isLive() {
+        return live;
+    }
+    public void setLive(boolean live) {
+        this.live = live;
+    }
 
     private Gun gun = new Gun();
     private boolean bU = false;
@@ -37,13 +48,13 @@ public class BaseTank extends BaseObject {
 
     public BaseTank(boolean bGood, int x, int y, int tankMoveSpeedX, int tankMoveSpeedY, int tankWidth, int tankHeight , Direction dir) {
         super(x, y, tankMoveSpeedX, tankMoveSpeedY, tankWidth, tankHeight);
-        this.bGood = bGood;
+        this.good = bGood;
         this.dir = dir;
     }
 
     public void draw(Graphics g, MainView mainView) {
         Color c = g.getColor();
-        if (this.bGood) {
+        if (this.good) {
             g.setColor(Color.BLUE);
         } else {
             g.setColor(Color.GREEN);
