@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -54,9 +55,16 @@ public class BaseTank extends BaseObject {
         //画出炮筒
         gun.draw(g);
         //TODO 画出坦克的子弹
-        for (Bullet bullet : bulletList) {
-            bullet.draw(g, mainView);
+        Iterator<Bullet> it = bulletList.iterator();
+        while(it.hasNext()){
+            Bullet bullet = it.next();
+            if(bullet.live){
+                bullet.draw(g,mainView);
+            }else{
+                it.remove();
+            }
         }
+
         //TODO 画出边框
         g.setColor(c);
     }

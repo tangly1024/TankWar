@@ -30,8 +30,6 @@ public class MainController {
     @Resource
     TankFactory tankFactory;//坦克工厂
 
-    ObjectManager objectManager;//对象管理 单例
-
     @Resource
     MainView mainView;
 
@@ -39,18 +37,18 @@ public class MainController {
     public void init() {
         //添加坦克对象
         BaseTank myTank = tankFactory.getDefaulMyTank();
-        objectManager.singleTon.setMyTank(myTank);
+        ObjectManager.singleTon.setMyTank(myTank);
         Random rand = new Random();
         for (int i = 0; i <= 1; i++) {
             Direction dir = Direction.values()[rand.nextInt(8)];
             EnemyTank enemyTank = tankFactory.getEnmemyTank(rand.nextInt(Constant.WINDOW_WIDTH - 100), rand.nextInt(Constant.WINDOW_HEIGHT - 100), dir);
-            objectManager.singleTon.getEnemyTankList().add(enemyTank);
+            ObjectManager.singleTon.getEnemyTankList().add(enemyTank);
         }
 
         mainView.initWindow();
 //        mainView.getGraphics();
         mainExecutor.submit(new PaintThread(mainView));
-        mainExecutor.submit(new EventThread(mainView, objectManager.singleTon.getMyTank(), objectManager.singleTon.getEnemyTankList()));
+        mainExecutor.submit(new EventThread(mainView, ObjectManager.singleTon.getMyTank(), ObjectManager.singleTon.getEnemyTankList()));
     }
 
 }

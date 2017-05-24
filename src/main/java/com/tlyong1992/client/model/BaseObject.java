@@ -37,6 +37,10 @@ public abstract class BaseObject {
         return positionY;
     }
 
+    public Rectangle getRect(){
+        return new Rectangle(positionX,positionY,width,height);
+    }
+
     public int getWidth() {
         return width;
     }

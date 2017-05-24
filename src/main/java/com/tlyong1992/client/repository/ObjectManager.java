@@ -25,10 +25,6 @@ public enum ObjectManager {
         return enemyTankList;
     }
 
-    public void setEnemyTankList(List<EnemyTank> enemyTankList) {
-        this.enemyTankList = enemyTankList;
-    }
-
     public BaseTank getMyTank() {
         return myTank;
     }

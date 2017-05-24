@@ -34,12 +34,20 @@ public class EventThread implements Runnable {
         logger.info("启动事件处理线程");
         while (true) {
             handleMove();
+            handleBullet();
             try {
                 Thread.sleep(30);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     * 处理武器的碰撞
+     */
+    private void handleBullet() {
+        //TODO
     }
 
     /**
