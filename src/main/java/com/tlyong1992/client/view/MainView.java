@@ -1,7 +1,7 @@
 package com.tlyong1992.client.view;
 
 import com.tlyong1992.client.constant.Constant;
-import com.tlyong1992.client.model.Tank;
+import com.tlyong1992.client.model.BaseTank;
 import com.tlyong1992.client.repository.ObjectManager;
 
 import javax.swing.*;
@@ -25,6 +25,7 @@ public class MainView extends JFrame {
     private String TITLE = Constant.WINDOW_TITLE;
     private int offsetY; //窗口边沿偏移值
     private int offsetX; //窗口边沿偏移值
+    private int titleBsrHeight; //标题栏高度
 
     Image offScreenImage = null;
 
@@ -32,10 +33,12 @@ public class MainView extends JFrame {
         this.setSize(windowWidth, windowHeight);
         this.setTitle(TITLE);
         this.setVisible(true);
-//      this.setResizable(false); //不可缩放窗口
+        this.setResizable(true); //不可缩放窗口
         this.setLocation(windowPositionX, windowPositionY);
         offsetY = windowHeight - this.getContentPane().getHeight();
         offsetX = windowWidth - this.getContentPane().getWidth();
+        titleBsrHeight =this.getInsets().top;
+
         //AddListener
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -44,17 +47,8 @@ public class MainView extends JFrame {
             }
         });
         this.addKeyListener(new KeyAdapter());
-//        createObject();
 
     }
-
-//    private void createObject() {
-//        objectList = new ArrayList();
-////        myTank = TankFactory.getDefaulMyTank();
-////        enemy = TankFactory.getEnmemyTank();
-////        objectList.add(myTank);
-////        objectList.add(enemy);
-//    }
 
     @Override
     public void paint(Graphics g) {
@@ -75,13 +69,23 @@ public class MainView extends JFrame {
         Color c = gImage.getColor();
         gImage.setColor(Color.black);
         gImage.fillRect(0, 0, windowWidth, windowHeight);
+        gImage.setColor(Color.WHITE);
+        //顶部水平线
+        gImage.drawLine(offsetX, offsetY, windowWidth - offsetX, offsetY);
+        //底部水平线
+        gImage.drawLine(offsetX, windowHeight - 2 * (offsetY - titleBsrHeight), windowWidth - offsetX, windowHeight - 2 * (offsetY - +titleBsrHeight));
+        //左侧水平线
+        gImage.drawLine(offsetX,offsetY,offsetX, windowHeight - 2 * (offsetY - titleBsrHeight));
+        //右侧水平线
+        gImage.drawLine(windowWidth - offsetX, offsetY,windowWidth - offsetX, windowHeight - 2 * (offsetY - +titleBsrHeight));
+
         gImage.setColor(c);
     }
 
     void drawObject(Graphics g) {
 
         ObjectManager.singleTon.getMyTank().draw(g, this);
-        for(Tank enemyTank : ObjectManager.singleTon.getEnemyTankList()){
+        for(BaseTank enemyTank : ObjectManager.singleTon.getEnemyTankList()){
             enemyTank.draw(g,this);
         }
 
@@ -106,5 +110,7 @@ public class MainView extends JFrame {
     public int getOffsetX() {
         return offsetX;
     }
-
+    public int getTitleBsrHeight() {
+        return titleBsrHeight;
+    }
 }

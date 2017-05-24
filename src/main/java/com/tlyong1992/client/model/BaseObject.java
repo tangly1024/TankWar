@@ -48,35 +48,59 @@ public abstract class BaseObject {
     public abstract void draw(Graphics g, MainView mainView);
 
     //处理物体移动的函数
-    public void move() {
+    public void move(MainView mainView) {
         switch (dir) {
             case L:
-                positionX -= speedX;
+                if(positionX > 0 ){
+                    positionX -= speedX;
+                }
                 break;
             case LU:
-                positionX -= speedX;
-                positionY -= speedY;
+                if(positionX > 0 ){
+                    positionX -= speedX;
+                }
+                if(positionY > 0){
+                    positionY -= speedY;
+                }
                 break;
             case RU:
-                positionX += speedX;
-                positionY -= speedY;
+                if(positionX + mainView.getOffsetX() + width < mainView.getWidth() - mainView.getOffsetX() ){
+                    positionX += speedX;
+                }
+                if(positionY > 0){
+                    positionY -= speedY;
+                }
                 break;
             case R:
-                positionX += speedX;
+                if(positionX + mainView.getOffsetX() + width < mainView.getWidth() - mainView.getOffsetX() ){
+                    positionX += speedX;
+                }
                 break;
             case RD:
-                positionX += speedX;
-                positionY += speedY;
+                if(positionX + mainView.getOffsetX() + width < mainView.getWidth() - mainView.getOffsetX() ){
+                    positionX += speedX;
+                }
+                if(positionY + height + mainView.getOffsetY() + 2 * ( mainView.getOffsetY() - mainView.getTitleBsrHeight())  < mainView.getHeight()){
+                    positionY += speedY;
+                }
                 break;
             case D:
-                positionY += speedY;
+                if(positionY + height + mainView.getOffsetY() + 2 * ( mainView.getOffsetY() - mainView.getTitleBsrHeight())  < mainView.getHeight()){
+                    positionY += speedY;
+                }
                 break;
             case LD:
-                positionX -= speedX;
-                positionY += speedY;
+                if(positionX > 0 ){
+                    positionX -= speedX;
+                }
+                if(positionY + height + mainView.getOffsetY() + 2 * ( mainView.getOffsetY() - mainView.getTitleBsrHeight())  < mainView.getHeight()){
+                    positionY += speedY;
+                }
                 break;
             case U:
-                positionY -= speedY;
+                if(positionY > 0){
+                    positionY -= speedY;
+                }
                 break;
             case STOP:
                 break;

@@ -1,12 +1,13 @@
 package com.tlyong1992.client.model;
 
-import com.tlyong1992.client.constant.Direction;
 import com.tlyong1992.client.constant.Constant;
+import com.tlyong1992.client.constant.Direction;
 import com.tlyong1992.client.view.MainView;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ import java.util.List;
  * DATE：2017/4/21
  * TIME：16:12
  */
-public class Tank extends BaseObject {
+public class BaseTank extends BaseObject {
 
     private int width = 30;
     private int height = 30;
@@ -27,9 +28,13 @@ public class Tank extends BaseObject {
     private boolean bR = false;
     private boolean bD = false;
 
-    List<Bullet> bulletList = new ArrayList();
+    List<Bullet> bulletList = Collections.synchronizedList(new ArrayList());
 
-    public Tank(boolean bGood, int x, int y, int tankMoveSpeedX, int tankMoveSpeedY, int tankWidth, int tankHeight , Direction dir) {
+    public List<Bullet> getBulletList() {
+        return bulletList;
+    }
+
+    public BaseTank(boolean bGood, int x, int y, int tankMoveSpeedX, int tankMoveSpeedY, int tankWidth, int tankHeight , Direction dir) {
         super(x, y, tankMoveSpeedX, tankMoveSpeedY, tankWidth, tankHeight);
         this.bGood = bGood;
         this.dir = dir;
@@ -49,10 +54,9 @@ public class Tank extends BaseObject {
         gun.draw(g, mainView.getOffsetX(), mainView.getOffsetY());
         //TODO 画出坦克的子弹
         for (Bullet bullet : bulletList) {
-            //画子弹的偏移初始位置
-            //画子弹的偏移初始位置
             bullet.draw(g, mainView);
         }
+        //TODO 画出边框
         g.setColor(c);
     }
 

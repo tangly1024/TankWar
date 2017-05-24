@@ -3,7 +3,8 @@ package com.tlyong1992.client.controller;
 import com.tlyong1992.client.constant.Constant;
 import com.tlyong1992.client.constant.Direction;
 import com.tlyong1992.client.factory.TankFactory;
-import com.tlyong1992.client.model.Tank;
+import com.tlyong1992.client.model.BaseTank;
+import com.tlyong1992.client.model.EnemyTank;
 import com.tlyong1992.client.repository.ObjectManager;
 import com.tlyong1992.client.thread.EventThread;
 import com.tlyong1992.client.thread.PaintThread;
@@ -37,19 +38,19 @@ public class MainController {
     @PostConstruct
     public void init() {
         //添加坦克对象
-        Tank myTank = tankFactory.getDefaulMyTank();
+        BaseTank myTank = tankFactory.getDefaulMyTank();
         objectManager.singleTon.setMyTank(myTank);
         Random rand = new Random();
         for (int i = 0; i <= 10; i++) {
             Direction dir = Direction.values()[rand.nextInt(8)];
-            Tank enemyTank = tankFactory.getEnmemyTank(rand.nextInt(Constant.WINDOW_WIDTH), rand.nextInt(Constant.WINDOW_HEIGHT), dir);
+            EnemyTank enemyTank = tankFactory.getEnmemyTank(rand.nextInt(Constant.WINDOW_WIDTH - 100), rand.nextInt(Constant.WINDOW_HEIGHT - 100), dir);
             objectManager.singleTon.getEnemyTankList().add(enemyTank);
         }
 
         mainView.initWindow();
 //        mainView.getGraphics();
         mainExecutor.submit(new PaintThread(mainView));
-        mainExecutor.submit(new EventThread(objectManager.singleTon.getMyTank(),objectManager.singleTon.getEnemyTankList()));
+        mainExecutor.submit(new EventThread(mainView, objectManager.singleTon.getMyTank(), objectManager.singleTon.getEnemyTankList()));
     }
 
 }

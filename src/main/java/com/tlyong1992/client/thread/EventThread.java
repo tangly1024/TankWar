@@ -1,9 +1,13 @@
 package com.tlyong1992.client.thread;
 
-import com.tlyong1992.client.model.Tank;
+import com.tlyong1992.client.constant.Direction;
+import com.tlyong1992.client.model.BaseTank;
+import com.tlyong1992.client.model.EnemyTank;
+import com.tlyong1992.client.view.MainView;
 import org.apache.log4j.Logger;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * 事件处理线程
@@ -15,11 +19,14 @@ public class EventThread implements Runnable {
 
     Logger logger = Logger.getLogger(this.getClass());
 
-    List<Tank> tankList;
+    List<EnemyTank> tankList;
 
-    Tank myTank;
+    BaseTank myTank;
 
-    public EventThread(Tank myTank , List<Tank> objectList) {
+    MainView mainView;
+
+    public EventThread(MainView mainView , BaseTank myTank , List<EnemyTank> objectList) {
+        this.mainView = mainView;
         this.myTank = myTank;
         this.tankList = objectList;
     }
@@ -41,9 +48,17 @@ public class EventThread implements Runnable {
      * 处理对象的移动
      */
     private void handleMove() {
-        myTank.move();
-        for (Tank moveObject : tankList) {
-            moveObject.move();
+        myTank.move(mainView);
+        Random rand = new Random();
+        for (EnemyTank enemyTank : tankList) {
+            //坦克对象的移动处理
+            enemyTank.move(mainView);
+            enemyTank.countStep();
+            if(enemyTank.getStepCount()>30){
+                Direction dir = Direction.values()[rand.nextInt(8)];
+                enemyTank.changeDir(dir);
+            }
+
         }
     }
 }
