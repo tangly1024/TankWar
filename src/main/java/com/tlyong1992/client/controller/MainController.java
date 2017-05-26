@@ -9,6 +9,7 @@ import com.tlyong1992.client.repository.ObjectManager;
 import com.tlyong1992.client.thread.EventThread;
 import com.tlyong1992.client.thread.PaintThread;
 import com.tlyong1992.client.view.MainView;
+import org.apache.log4j.Logger;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Controller;
 
@@ -24,6 +25,8 @@ import java.util.Random;
 @Controller
 public class MainController {
 
+    Logger logger = Logger.getLogger(MainController.class);
+
     @Resource
     ThreadPoolTaskExecutor mainExecutor;//线程调度
 
@@ -35,6 +38,7 @@ public class MainController {
 
     @PostConstruct
     public void init() {
+        logger.info("初始化对象");
         //添加坦克对象
         BaseTank myTank = tankFactory.getDefaulMyTank();
         ObjectManager.singleTon.setMyTank(myTank);
@@ -45,6 +49,7 @@ public class MainController {
             ObjectManager.singleTon.getEnemyTankList().add(enemyTank);
         }
 
+        logger.info("初始化窗口");
         mainView.initWindow();
 //        mainView.getGraphics();
         mainExecutor.submit(new PaintThread(mainView));

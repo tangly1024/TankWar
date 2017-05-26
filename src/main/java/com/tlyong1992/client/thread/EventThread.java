@@ -56,8 +56,7 @@ public class EventThread implements Runnable {
             EnemyTank enemy = it.next();
             for (Bullet bullet : myTank.getBulletList()) {
                 if (enemy.getRect().intersects(bullet.getRect())) {
-                    System.out.println("发生碰撞");
-                    enemy.setLive(false);
+//                    enemy.setLive(false);
                     it.remove();
                     bullet.setLive(false);
                 }
