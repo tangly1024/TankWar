@@ -20,6 +20,7 @@ public class EnemyTank extends BaseTank{
     }
     public void changeDir(Direction dir){
         this.stepCount = 0;
+        this.changeGunDir(dir);
         this.dir = dir;
     }
 

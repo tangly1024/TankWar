@@ -1,5 +1,6 @@
 package com.tlyong1992.client.thread;
 
+import com.tlyong1992.client.constant.Direction;
 import com.tlyong1992.client.model.BaseTank;
 import com.tlyong1992.client.model.Bullet;
 import com.tlyong1992.client.model.EnemyTank;
@@ -9,6 +10,7 @@ import org.apache.log4j.Logger;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 /**
  * 事件处理线程
@@ -50,7 +52,7 @@ public class EventThread implements Runnable {
      * 处理武器的碰撞
      */
     private void handleAttack() {
-        //TODO
+        //TODO 处理武器的碰撞
         Iterator<EnemyTank> it = ObjectManager.singleTon.getEnemyTankList().iterator();
         while(it.hasNext()){
             EnemyTank enemy = it.next();
@@ -69,16 +71,16 @@ public class EventThread implements Runnable {
      */
     private void handleMove() {
         myTank.move(mainView);
-//        Random rand = new Random();
-//        for (EnemyTank enemyTank : tankList) {
-//            //坦克对象的移动处理
-//            enemyTank.move(mainView);
-//            enemyTank.countStep();
-//            if(enemyTank.getStepCount()>30){
-//                Direction dir = Direction.values()[rand.nextInt(8)];
-//                enemyTank.changeDir(dir);
-//            }
-//
-//        }
+        Random rand = new Random();
+        for (EnemyTank enemyTank : tankList) {
+            //坦克对象的移动处理
+            enemyTank.move(mainView);
+            enemyTank.countStep();
+            if(enemyTank.getStepCount()>30){
+                Direction dir = Direction.values()[rand.nextInt(8)];
+                enemyTank.changeDir(dir);
+            }
+
+        }
     }
 }

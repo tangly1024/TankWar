@@ -36,7 +36,6 @@ public class Bullet extends BaseObject {
 
     @Override
     public void move(MainView mainView) {
-        //TODO 子弹右侧的消失还有问题
         switch (dir) {
             case L:
                 if(positionX - mainView.getOffsetX() + tank.getWidth() / 2 > 0 ){

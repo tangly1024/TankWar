@@ -27,9 +27,11 @@ public class BaseTank extends BaseObject {
     public boolean isGood() {
         return good;
     }
+
     public boolean isLive() {
         return live;
     }
+
     public void setLive(boolean live) {
         this.live = live;
     }
@@ -46,10 +48,11 @@ public class BaseTank extends BaseObject {
         return bulletList;
     }
 
-    public BaseTank(boolean bGood, int x, int y, int tankMoveSpeedX, int tankMoveSpeedY, int tankWidth, int tankHeight , Direction dir) {
+    public BaseTank(boolean bGood, int x, int y, int tankMoveSpeedX, int tankMoveSpeedY, int tankWidth, int tankHeight, Direction dir) {
         super(x, y, tankMoveSpeedX, tankMoveSpeedY, tankWidth, tankHeight);
         this.good = bGood;
         this.dir = dir;
+        changeGunDir(dir); //初始化炮筒方向
     }
 
     public void draw(Graphics g, MainView mainView) {
@@ -65,49 +68,48 @@ public class BaseTank extends BaseObject {
         g.setColor(Color.RED);
         //画出炮筒
         gun.draw(g);
-        //TODO 画出坦克的子弹
         Iterator<Bullet> it = bulletList.iterator();
-        while(it.hasNext()){
+        while (it.hasNext()) {
             Bullet bullet = it.next();
-            if(bullet.live){
-                bullet.draw(g,mainView);
-            }else{
-                it.remove();
+            if (bullet.live) {
+                bullet.draw(g, mainView); //画出活着的子弹
+            } else {
+                it.remove(); //移除子弹交由坦克处理
             }
         }
 
-        //TODO 画出边框
         g.setColor(c);
     }
 
     //坦克的炮筒是一个内部类
     private class Gun {
-        Direction gunDir = Direction.U; //炮口方向
+        Direction gunDir; //炮口方向
+
         void draw(Graphics g) {
             switch (gunDir) {
                 case L:
-                    g.drawLine( positionX,  positionY + height / 2,  positionX + width / 2,  positionY + height / 2);
+                    g.drawLine(positionX, positionY + height / 2, positionX + width / 2, positionY + height / 2);
                     break;
                 case LU:
-                    g.drawLine((int) ( positionX + (width / 2) - (width / 2) / Math.sqrt(2)) - 3, (int) ( positionY + (height / 2) / Math.sqrt(2)) - 5,  positionX + width / 2,  positionY + height / 2);
+                    g.drawLine((int) (positionX + (width / 2) - (width / 2) / Math.sqrt(2)) - 3, (int) (positionY + (height / 2) / Math.sqrt(2)) - 5, positionX + width / 2, positionY + height / 2);
                     break;
                 case U:
-                    g.drawLine( positionX + (width / 2),  positionY,  positionX + width / 2,  positionY + height / 2);
+                    g.drawLine(positionX + (width / 2), positionY, positionX + width / 2, positionY + height / 2);
                     break;
                 case RU:
-                    g.drawLine((int) ( positionX + (width / 2) + (width / 2) / Math.sqrt(2) + 3), (int) ( positionY + (height / 2) / Math.sqrt(2)) - 5,  positionX + width / 2,  positionY + height / 2);
+                    g.drawLine((int) (positionX + (width / 2) + (width / 2) / Math.sqrt(2) + 3), (int) (positionY + (height / 2) / Math.sqrt(2)) - 5, positionX + width / 2, positionY + height / 2);
                     break;
                 case R:
-                    g.drawLine( positionX + width,  positionY + height / 2,  positionX + width / 2,  positionY + height / 2);
+                    g.drawLine(positionX + width, positionY + height / 2, positionX + width / 2, positionY + height / 2);
                     break;
                 case RD:
-                    g.drawLine((int) ( positionX + (width / 2) + (width / 2) / Math.sqrt(2)), (int) ( positionY + height / 2 + (height / 2) / Math.sqrt(2) + 2),  positionX + width / 2,  positionY + height / 2);
+                    g.drawLine((int) (positionX + (width / 2) + (width / 2) / Math.sqrt(2)), (int) (positionY + height / 2 + (height / 2) / Math.sqrt(2) + 2), positionX + width / 2, positionY + height / 2);
                     break;
                 case D:
-                    g.drawLine( positionX + width / 2,  positionY + height,  positionX + width / 2,  positionY + height / 2);
+                    g.drawLine(positionX + width / 2, positionY + height, positionX + width / 2, positionY + height / 2);
                     break;
                 case LD:
-                    g.drawLine((int) ( positionX + (width / 2) - (width / 2) / Math.sqrt(2)), (int) ( positionY + height / 2 + (height / 2) / Math.sqrt(2) + 2),  positionX + width / 2,  positionY + height / 2);
+                    g.drawLine((int) (positionX + (width / 2) - (width / 2) / Math.sqrt(2)), (int) (positionY + height / 2 + (height / 2) / Math.sqrt(2) + 2), positionX + width / 2, positionY + height / 2);
                     break;
                 case STOP:
                     break;
@@ -115,7 +117,6 @@ public class BaseTank extends BaseObject {
                     break;
             }
         }
-
     }
 
     private void locateDirection() {
@@ -166,7 +167,7 @@ public class BaseTank extends BaseObject {
             bD = true;
         }
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            bulletList.add(new Bullet(this, Constant.BULLET_MOVE_SPEED_X,Constant.BULLET_MOVE_SPEED_Y,Constant.BULLET_WIDTH,Constant.BULLET_HEIGHT));
+            bulletList.add(new Bullet(this, Constant.BULLET_MOVE_SPEED_X, Constant.BULLET_MOVE_SPEED_Y, Constant.BULLET_WIDTH, Constant.BULLET_HEIGHT));
         }
         locateDirection();
     }
@@ -187,8 +188,11 @@ public class BaseTank extends BaseObject {
         locateDirection();
     }
 
+    public void changeGunDir(Direction dir) {
+        this.gun.gunDir = dir;
+    }
 
     public Direction getGunDir() {
-        return gun.gunDir;
+        return this.gun.gunDir;
     }
 }
