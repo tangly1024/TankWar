@@ -19,11 +19,7 @@ public class BaseTank extends BaseObject {
     private int height = 30;
 
     private boolean good;
-    private boolean live;
-
-    public boolean isGood() {
-        return good;
-    }
+    private boolean live = true;
 
     public boolean isLive() {
         return live;
@@ -154,7 +150,7 @@ public class BaseTank extends BaseObject {
     /**
      * 子弹发射
      */
-    private void shoot() {
+    public void shoot() {
         Bullet bullet = BulletFactory.buildMyBullet(this);
         ObjectManager.singleTon.getBulletList().add(bullet);
     }

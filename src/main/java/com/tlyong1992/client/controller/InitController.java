@@ -23,15 +23,12 @@ import java.util.Random;
  * TIME：11:12
  */
 @Controller
-public class MainController {
+public class InitController {
 
-    Logger logger = Logger.getLogger(MainController.class);
+    Logger logger = Logger.getLogger(InitController.class);
 
     @Resource
     ThreadPoolTaskExecutor mainExecutor;//线程调度
-
-    @Resource
-    TankFactory tankFactory;//坦克工厂
 
     @Resource
     MainView mainView;
@@ -40,17 +37,18 @@ public class MainController {
     public void init() {
         logger.info("初始化对象");
         //添加坦克对象
-        BaseTank myTank = tankFactory.getDefaulMyTank();
+        BaseTank myTank = TankFactory.getDefaulMyTank();
         ObjectManager.singleTon.setMyTank(myTank);
         Random rand = new Random();
         for (int i = 0; i <= 1; i++) {
             Direction dir = Direction.values()[rand.nextInt(8)];
-            EnemyTank enemyTank = tankFactory.getEnmemyTank(rand.nextInt(Constant.WINDOW_WIDTH - 100), rand.nextInt(Constant.WINDOW_HEIGHT - 100), dir);
+            EnemyTank enemyTank = TankFactory.getEnmemyTank(rand.nextInt(Constant.WINDOW_WIDTH - 100), rand.nextInt(Constant.WINDOW_HEIGHT - 100), dir);
             ObjectManager.singleTon.getEnemyTankList().add(enemyTank);
         }
 
         logger.info("初始化窗口");
         mainView.initWindow();
+
         mainExecutor.submit(new PaintThread(mainView));
         mainExecutor.submit(new EventThread(mainView, ObjectManager.singleTon.getMyTank(), ObjectManager.singleTon.getEnemyTankList()));
     }

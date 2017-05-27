@@ -57,8 +57,8 @@ public class EventThread implements Runnable {
         while(it.hasNext()){
             EnemyTank enemy = it.next();
             for (Bullet bullet : ObjectManager.singleTon.getBulletList()) {
-                if (enemy.getRect().intersects(bullet.getRect())) {
-                    it.remove();
+                if(bullet.attackTank(enemy)){
+                    enemy.setLive(false);
                     bullet.setLive(false);
                 }
             }
@@ -87,6 +87,7 @@ public class EventThread implements Runnable {
 
             if( enemyTank.getStepCount() == 60){
                 enemyTank.resetStepCount();
+                enemyTank.shoot();
             }
 
         }

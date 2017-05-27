@@ -1,15 +1,15 @@
 package com.tlyong1992.client.view;
 
 import com.tlyong1992.client.constant.Constant;
-import com.tlyong1992.client.model.BaseTank;
+import com.tlyong1992.client.controller.KeyController;
+import com.tlyong1992.client.controller.WindowController;
 import com.tlyong1992.client.model.Bullet;
+import com.tlyong1992.client.model.EnemyTank;
 import com.tlyong1992.client.repository.ObjectManager;
 
+import javax.annotation.Resource;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.Iterator;
 
 /**
@@ -31,6 +31,12 @@ public class MainView extends JFrame {
 
     Image offScreenImage = null;
 
+    @Resource
+    private KeyController keyController;
+
+    @Resource
+    private WindowController windowController;
+
     public void initWindow() {
         this.setSize(windowWidth, windowHeight);
         this.setTitle(TITLE);
@@ -42,13 +48,8 @@ public class MainView extends JFrame {
         titleBsrHeight =this.getInsets().top;
 
         //AddListener
-        this.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
-        this.addKeyListener(new KeyAdapter());
+        this.addWindowListener(windowController);
+        this.addKeyListener(keyController);
 
     }
 
@@ -88,9 +89,18 @@ public class MainView extends JFrame {
 
     void drawObject(Graphics g) {
 
-        ObjectManager.singleTon.getMyTank().draw(g, this);
-        for(BaseTank enemyTank : ObjectManager.singleTon.getEnemyTankList()){
-            enemyTank.draw(g,this);
+        if(ObjectManager.singleTon.getMyTank()!=null && ObjectManager.singleTon.getMyTank().isLive()){
+            ObjectManager.singleTon.getMyTank().draw(g, this);
+        }
+
+        Iterator<EnemyTank> tankIt = ObjectManager.singleTon.getEnemyTankList().iterator();
+        while (tankIt.hasNext()){
+            EnemyTank enemyTank = tankIt.next();
+            if(enemyTank.isLive()){
+                enemyTank.draw(g,this);
+            }else{
+                tankIt.remove();
+            }
         }
 
         Iterator<Bullet> it = ObjectManager.singleTon.getBulletList().iterator();
@@ -105,19 +115,6 @@ public class MainView extends JFrame {
 
     }
 
-
-    private class KeyAdapter extends java.awt.event.KeyAdapter {
-
-        @Override
-        public void keyPressed(KeyEvent e) {
-            ObjectManager.singleTon.getMyTank().keyPressed(e);
-        }
-
-        @Override
-        public void keyReleased(KeyEvent e) {
-            ObjectManager.singleTon.getMyTank().keyReleased(e);
-        }
-    }
 
     public int getOffsetY() {
         return offsetY;

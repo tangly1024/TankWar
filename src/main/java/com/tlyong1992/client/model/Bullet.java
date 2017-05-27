@@ -118,4 +118,16 @@ public class Bullet extends BaseObject {
                 break;
         }
     }
+
+    public boolean attackTank(EnemyTank enemy) {
+        if (enemy == tank) {
+            return false;
+        }
+        if (enemy.getRect().intersects(getRect())) {
+            return true;
+        }
+
+        return false;
+    }
+
 }
