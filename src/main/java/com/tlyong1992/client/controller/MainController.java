@@ -51,7 +51,6 @@ public class MainController {
 
         logger.info("初始化窗口");
         mainView.initWindow();
-//        mainView.getGraphics();
         mainExecutor.submit(new PaintThread(mainView));
         mainExecutor.submit(new EventThread(mainView, ObjectManager.singleTon.getMyTank(), ObjectManager.singleTon.getEnemyTankList()));
     }

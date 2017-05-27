@@ -1,6 +1,7 @@
 package com.tlyong1992.client.repository;
 
 import com.tlyong1992.client.model.BaseTank;
+import com.tlyong1992.client.model.Bullet;
 import com.tlyong1992.client.model.EnemyTank;
 
 import java.util.ArrayList;
@@ -16,6 +17,13 @@ public enum ObjectManager {
     singleTon;
     private Map<String, String> paramMap; //参数内存
     private List<EnemyTank> enemyTankList; //对象内存
+
+    public List<Bullet> getBulletList() {
+        return bulletList;
+    }
+
+    private List<Bullet> bulletList;//子弹列表
+
     private BaseTank myTank = null; //主坦克
 
     public Map<String, String> getParamMap() {
@@ -36,6 +44,7 @@ public enum ObjectManager {
     ObjectManager(){
         paramMap = new ConcurrentHashMap<>();
         enemyTankList = Collections.synchronizedList(new ArrayList());
+        bulletList = Collections.synchronizedList(new ArrayList());
     }
 
 }

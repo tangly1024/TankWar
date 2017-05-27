@@ -1,15 +1,12 @@
 package com.tlyong1992.client.model;
 
-import com.tlyong1992.client.constant.Constant;
 import com.tlyong1992.client.constant.Direction;
+import com.tlyong1992.client.factory.BulletFactory;
+import com.tlyong1992.client.repository.ObjectManager;
 import com.tlyong1992.client.view.MainView;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * USER：tangly
@@ -42,17 +39,11 @@ public class BaseTank extends BaseObject {
     private boolean bR = false;
     private boolean bD = false;
 
-    List<Bullet> bulletList = Collections.synchronizedList(new ArrayList());
-
-    public List<Bullet> getBulletList() {
-        return bulletList;
-    }
-
     public BaseTank(boolean bGood, int x, int y, int tankMoveSpeedX, int tankMoveSpeedY, int tankWidth, int tankHeight, Direction dir) {
         super(x, y, tankMoveSpeedX, tankMoveSpeedY, tankWidth, tankHeight);
         this.good = bGood;
         this.dir = dir;
-        changeGunDir(dir); //初始化炮筒方向
+        changeGunDir(Direction.D); //初始化炮筒方向
     }
 
     public void draw(Graphics g, MainView mainView) {
@@ -62,22 +53,10 @@ public class BaseTank extends BaseObject {
         } else {
             g.setColor(Color.GREEN);
         }
-//        g.drawString("导弹数量 : " + bulletList.size(), mainView.getOffsetX() + 20, mainView.getOffsetY() + 20);
-//        g.fillOval(mainView.getOffsetX() + positionX, mainView.getOffsetY() + positionY, width, height); //坦克身体是一个圆
         g.fillOval(positionX, positionY, width, height); //坦克身体是一个圆
         g.setColor(Color.RED);
         //画出炮筒
         gun.draw(g);
-        Iterator<Bullet> it = bulletList.iterator();
-        while (it.hasNext()) {
-            Bullet bullet = it.next();
-            if (bullet.live) {
-                bullet.draw(g, mainView); //画出活着的子弹
-            } else {
-                it.remove(); //移除子弹交由坦克处理
-            }
-        }
-
         g.setColor(c);
     }
 
@@ -167,9 +146,17 @@ public class BaseTank extends BaseObject {
             bD = true;
         }
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            bulletList.add(new Bullet(this, Constant.BULLET_MOVE_SPEED_X, Constant.BULLET_MOVE_SPEED_Y, Constant.BULLET_WIDTH, Constant.BULLET_HEIGHT));
+            shoot();
         }
         locateDirection();
+    }
+
+    /**
+     * 子弹发射
+     */
+    private void shoot() {
+        Bullet bullet = BulletFactory.buildMyBullet(this);
+        ObjectManager.singleTon.getBulletList().add(bullet);
     }
 
     public void keyReleased(KeyEvent e) {

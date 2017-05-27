@@ -2,7 +2,7 @@ package com.tlyong1992.client.view;
 
 import com.tlyong1992.client.constant.Constant;
 import com.tlyong1992.client.model.BaseTank;
-import com.tlyong1992.client.model.EnemyTank;
+import com.tlyong1992.client.model.Bullet;
 import com.tlyong1992.client.repository.ObjectManager;
 
 import javax.swing.*;
@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Iterator;
 
 /**
  * USER：tangly
@@ -34,7 +35,7 @@ public class MainView extends JFrame {
         this.setSize(windowWidth, windowHeight);
         this.setTitle(TITLE);
         this.setVisible(true);
-        this.setResizable(true); //不可缩放窗口
+        this.setResizable(false); //不可缩放窗口
         this.setLocation(windowPositionX, windowPositionY);
         offsetY = windowHeight - this.getContentPane().getHeight();
         offsetX = windowWidth - this.getContentPane().getWidth();
@@ -80,14 +81,7 @@ public class MainView extends JFrame {
         //右侧垂直线
         gImage.drawLine(windowWidth - offsetX, offsetY,windowWidth - offsetX, windowHeight - 2 * (offsetY - +titleBsrHeight));
 
-        int count = 0 ;
-        if(ObjectManager.singleTon.getMyTank() !=null){
-            count += ObjectManager.singleTon.getMyTank().getBulletList().size();
-        }
-        for(EnemyTank enemyTank : ObjectManager.singleTon.getEnemyTankList()){
-            count += enemyTank.getBulletList().size();
-        }
-        gImage.drawString("导弹数量 : " + count, offsetX + 20, offsetY + 20);
+        gImage.drawString("导弹数量 : " + ObjectManager.singleTon.getBulletList().size(), offsetX + 20, offsetY + 20);
 
         gImage.setColor(c);
     }
@@ -97,6 +91,16 @@ public class MainView extends JFrame {
         ObjectManager.singleTon.getMyTank().draw(g, this);
         for(BaseTank enemyTank : ObjectManager.singleTon.getEnemyTankList()){
             enemyTank.draw(g,this);
+        }
+
+        Iterator<Bullet> it = ObjectManager.singleTon.getBulletList().iterator();
+        while (it.hasNext()) {
+            Bullet bullet = it.next();
+            if (bullet.isLive()) {
+                bullet.draw(g, this); //画出活着的子弹
+            } else {
+                it.remove();
+            }
         }
 
     }

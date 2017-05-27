@@ -19,7 +19,6 @@ public class EnemyTank extends BaseTank{
         this.stepCount ++;
     }
     public void changeDir(Direction dir){
-        this.stepCount = 0;
         this.changeGunDir(dir);
         this.dir = dir;
     }
@@ -27,4 +26,5 @@ public class EnemyTank extends BaseTank{
     public int getStepCount() {
         return stepCount;
     }
+    public void resetStepCount(){stepCount = 0;}
 }

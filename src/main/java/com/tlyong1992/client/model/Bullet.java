@@ -15,6 +15,7 @@ public class Bullet extends BaseObject {
 
     boolean live = true;
 
+    public boolean isLive(){return live;}
     public void setLive(boolean live) {
         this.live = live;
     }

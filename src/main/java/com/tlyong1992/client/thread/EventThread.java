@@ -56,9 +56,8 @@ public class EventThread implements Runnable {
         Iterator<EnemyTank> it = ObjectManager.singleTon.getEnemyTankList().iterator();
         while(it.hasNext()){
             EnemyTank enemy = it.next();
-            for (Bullet bullet : myTank.getBulletList()) {
+            for (Bullet bullet : ObjectManager.singleTon.getBulletList()) {
                 if (enemy.getRect().intersects(bullet.getRect())) {
-//                    enemy.setLive(false);
                     it.remove();
                     bullet.setLive(false);
                 }
@@ -71,14 +70,23 @@ public class EventThread implements Runnable {
      */
     private void handleMove() {
         myTank.move(mainView);
+
         Random rand = new Random();
         for (EnemyTank enemyTank : tankList) {
-            //坦克对象的移动处理
-            enemyTank.move(mainView);
             enemyTank.countStep();
-            if(enemyTank.getStepCount()>30){
+
+            //坦克对象的移动处理
+            if(enemyTank.getStepCount() > 30 && enemyTank.getStepCount() < 60){
+                enemyTank.move(mainView);
+            }
+
+            if( enemyTank.getStepCount() == 30 ){
                 Direction dir = Direction.values()[rand.nextInt(8)];
                 enemyTank.changeDir(dir);
+            }
+
+            if( enemyTank.getStepCount() == 60){
+                enemyTank.resetStepCount();
             }
 
         }
