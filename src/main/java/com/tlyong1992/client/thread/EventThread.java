@@ -52,7 +52,7 @@ public class EventThread implements Runnable {
      * 处理武器的碰撞
      */
     private void handleAttack() {
-        //TODO 处理武器的碰撞
+        //TODO 处理武器的碰撞 有一定概率 子弹打不死
         Iterator<EnemyTank> it = ObjectManager.singleTon.getEnemyTankList().iterator();
         while(it.hasNext()){
             EnemyTank enemy = it.next();
@@ -61,6 +61,12 @@ public class EventThread implements Runnable {
                     enemy.setLive(false);
                     bullet.setLive(false);
                 }
+            }
+        }
+        for (Bullet bullet : ObjectManager.singleTon.getBulletList()) {
+            if(bullet.attackTank(myTank)){
+                myTank.setLive(false);
+                bullet.setLive(false);
             }
         }
     }
@@ -83,6 +89,7 @@ public class EventThread implements Runnable {
             if( enemyTank.getStepCount() == 30 ){
                 Direction dir = Direction.values()[rand.nextInt(8)];
                 enemyTank.changeDir(dir);
+                enemyTank.shoot();
             }
 
             if( enemyTank.getStepCount() == 60){

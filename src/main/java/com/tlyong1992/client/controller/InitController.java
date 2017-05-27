@@ -1,10 +1,7 @@
 package com.tlyong1992.client.controller;
 
-import com.tlyong1992.client.constant.Constant;
-import com.tlyong1992.client.constant.Direction;
 import com.tlyong1992.client.factory.TankFactory;
 import com.tlyong1992.client.model.BaseTank;
-import com.tlyong1992.client.model.EnemyTank;
 import com.tlyong1992.client.repository.ObjectManager;
 import com.tlyong1992.client.thread.EventThread;
 import com.tlyong1992.client.thread.PaintThread;
@@ -41,9 +38,7 @@ public class InitController {
         ObjectManager.singleTon.setMyTank(myTank);
         Random rand = new Random();
         for (int i = 0; i <= 1; i++) {
-            Direction dir = Direction.values()[rand.nextInt(8)];
-            EnemyTank enemyTank = TankFactory.getEnmemyTank(rand.nextInt(Constant.WINDOW_WIDTH - 100), rand.nextInt(Constant.WINDOW_HEIGHT - 100), dir);
-            ObjectManager.singleTon.getEnemyTankList().add(enemyTank);
+            TankFactory.generateRandomEnemy();
         }
 
         logger.info("初始化窗口");

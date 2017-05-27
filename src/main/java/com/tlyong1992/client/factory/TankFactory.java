@@ -5,6 +5,9 @@ import com.tlyong1992.client.constant.Direction;
 import com.tlyong1992.client.model.BaseTank;
 import com.tlyong1992.client.model.EnemyTank;
 import com.tlyong1992.client.model.MyTank;
+import com.tlyong1992.client.repository.ObjectManager;
+
+import java.util.Random;
 
 /**
  * USER：tangly
@@ -19,5 +22,12 @@ public class TankFactory {
 
     public static EnemyTank getEnmemyTank(int positionX, int positionY, Direction dir) {
         return new EnemyTank(false, positionX, positionY, Constant.TANK_MOVE_SPEED_X, Constant.TANK_MOVE_SPEED_Y, Constant.TANK_WIDTH, Constant.TANK_HEIGHT, dir);
+    }
+
+    public static void generateRandomEnemy() {
+        Random rand = new Random();
+        Direction dir = Direction.values()[rand.nextInt(8)];
+        EnemyTank enemyTank = TankFactory.getEnmemyTank(rand.nextInt(Constant.WINDOW_WIDTH - 100) + 40, rand.nextInt(Constant.WINDOW_HEIGHT - 100) + 50, dir);
+        ObjectManager.singleTon.getEnemyTankList().add(enemyTank);
     }
 }

@@ -1,6 +1,7 @@
 package com.tlyong1992.client.model;
 
 import com.tlyong1992.client.view.MainView;
+import org.apache.log4j.Logger;
 
 import java.awt.*;
 
@@ -10,6 +11,8 @@ import java.awt.*;
  * TIME：13:46
  */
 public class Bullet extends BaseObject {
+
+    Logger logger = Logger.getLogger(this.getClass());
 
     private BaseTank tank;//引用发出这颗子弹的坦克
 
@@ -119,12 +122,16 @@ public class Bullet extends BaseObject {
         }
     }
 
-    public boolean attackTank(EnemyTank enemy) {
-        if (enemy == tank) {
-            return false;
-        }
+    public boolean attackTank(BaseTank enemy) {
+
+        //TODO 有一定概率打不死，碰撞检测有异常
+        //TODO 有一定概率突然所有坦克都不能移动
+
         if (enemy.getRect().intersects(getRect())) {
-            return true;
+            if (enemy == tank) {
+                return false;
+            }
+             return true;
         }
 
         return false;

@@ -83,6 +83,7 @@ public class MainView extends JFrame {
         gImage.drawLine(windowWidth - offsetX, offsetY,windowWidth - offsetX, windowHeight - 2 * (offsetY - +titleBsrHeight));
 
         gImage.drawString("导弹数量 : " + ObjectManager.singleTon.getBulletList().size(), offsetX + 20, offsetY + 20);
+        gImage.drawString("坦克数量 : " + ObjectManager.singleTon.getEnemyTankList().size(), offsetX + 20, offsetY + 40);
 
         gImage.setColor(c);
     }

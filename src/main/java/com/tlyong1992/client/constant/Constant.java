@@ -20,8 +20,8 @@ public class Constant {
 
     public static int BULLET_MOVE_SPEED_X = 4;
     public static int BULLET_MOVE_SPEED_Y = 4;
-    public static int BULLET_WIDTH = 2;
-    public static int BULLET_HEIGHT = 2;
+    public static int BULLET_WIDTH = 3;
+    public static int BULLET_HEIGHT = 3;
 
     public static int WINDOW_WIDTH = 800;
     public static int WINDOW_HEIGHT = 600;

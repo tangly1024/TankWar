@@ -1,15 +1,11 @@
 package com.tlyong1992.client.controller;
 
-import com.tlyong1992.client.constant.Constant;
-import com.tlyong1992.client.constant.Direction;
 import com.tlyong1992.client.factory.TankFactory;
-import com.tlyong1992.client.model.EnemyTank;
 import com.tlyong1992.client.repository.ObjectManager;
 import org.springframework.stereotype.Component;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.Random;
 
 /**
  * USER：tangly
@@ -38,10 +34,10 @@ public class KeyController extends KeyAdapter {
                 ObjectManager.singleTon.getMyTank().keyPressed(e);
                 break;
             case KeyEvent.VK_R:
-                Random rand = new Random();
-                Direction dir = Direction.values()[rand.nextInt(8)];
-                EnemyTank enemyTank = TankFactory.getEnmemyTank(rand.nextInt(Constant.WINDOW_WIDTH - 100), rand.nextInt(Constant.WINDOW_HEIGHT - 100), dir);
-                ObjectManager.singleTon.getEnemyTankList().add(enemyTank);
+                TankFactory.generateRandomEnemy();
+                break;
+            case KeyEvent.VK_E:
+                ObjectManager.singleTon.getMyTank().setLive(true);
                 break;
             default:return;
         }
