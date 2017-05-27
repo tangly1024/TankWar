@@ -1,6 +1,6 @@
 package com.tlyong1992.client.model;
 
-import com.tlyong1992.client.constant.Direction;
+import com.tlyong1992.client.constant.Dir;
 
 /**
  * USER：tangly
@@ -8,7 +8,7 @@ import com.tlyong1992.client.constant.Direction;
  * TIME：10:58
  */
 public class MyTank extends BaseTank {
-    public MyTank(boolean bGood, int x, int y, int tankMoveSpeedX, int tankMoveSpeedY, int tankWidth, int tankHeight, Direction dir) {
+    public MyTank(boolean bGood, int x, int y, int tankMoveSpeedX, int tankMoveSpeedY, int tankWidth, int tankHeight, Dir dir) {
         super(bGood, x, y, tankMoveSpeedX, tankMoveSpeedY, tankWidth, tankHeight, dir);
     }
 }

@@ -1,6 +1,6 @@
 package com.tlyong1992.client.thread;
 
-import com.tlyong1992.client.constant.Direction;
+import com.tlyong1992.client.constant.Dir;
 import com.tlyong1992.client.model.BaseTank;
 import com.tlyong1992.client.model.Bullet;
 import com.tlyong1992.client.model.EnemyTank;
@@ -87,7 +87,7 @@ public class EventThread implements Runnable {
             }
 
             if( enemyTank.getStepCount() == 30 ){
-                Direction dir = Direction.values()[rand.nextInt(8)];
+                Dir dir = Dir.values()[rand.nextInt(8)];
                 enemyTank.changeDir(dir);
                 enemyTank.shoot();
             }

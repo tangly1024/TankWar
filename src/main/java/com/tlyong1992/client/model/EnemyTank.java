@@ -1,6 +1,6 @@
 package com.tlyong1992.client.model;
 
-import com.tlyong1992.client.constant.Direction;
+import com.tlyong1992.client.constant.Dir;
 
 /**
  * USER：tangly
@@ -9,7 +9,7 @@ import com.tlyong1992.client.constant.Direction;
  */
 public class EnemyTank extends BaseTank{
 
-    public EnemyTank(boolean bGood, int x, int y, int tankMoveSpeedX, int tankMoveSpeedY, int tankWidth, int tankHeight, Direction dir) {
+    public EnemyTank(boolean bGood, int x, int y, int tankMoveSpeedX, int tankMoveSpeedY, int tankWidth, int tankHeight, Dir dir) {
         super(bGood, x, y, tankMoveSpeedX, tankMoveSpeedY, tankWidth, tankHeight, dir);
     }
 
@@ -18,7 +18,7 @@ public class EnemyTank extends BaseTank{
     public void countStep(){
         this.stepCount ++;
     }
-    public void changeDir(Direction dir){
+    public void changeDir(Dir dir){
         this.changeGunDir(dir);
         this.dir = dir;
     }

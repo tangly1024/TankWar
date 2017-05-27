@@ -1,6 +1,6 @@
 package com.tlyong1992.client.model;
 
-import com.tlyong1992.client.constant.Direction;
+import com.tlyong1992.client.constant.Dir;
 import com.tlyong1992.client.factory.BulletFactory;
 import com.tlyong1992.client.repository.ObjectManager;
 import com.tlyong1992.client.view.MainView;
@@ -35,11 +35,11 @@ public class BaseTank extends BaseObject {
     private boolean bR = false;
     private boolean bD = false;
 
-    public BaseTank(boolean bGood, int x, int y, int tankMoveSpeedX, int tankMoveSpeedY, int tankWidth, int tankHeight, Direction dir) {
+    public BaseTank(boolean bGood, int x, int y, int tankMoveSpeedX, int tankMoveSpeedY, int tankWidth, int tankHeight, Dir dir) {
         super(x, y, tankMoveSpeedX, tankMoveSpeedY, tankWidth, tankHeight);
         this.good = bGood;
         this.dir = dir;
-        changeGunDir(Direction.D); //初始化炮筒方向
+        changeGunDir(Dir.D); //初始化炮筒方向
     }
 
     public void draw(Graphics g, MainView mainView) {
@@ -58,7 +58,7 @@ public class BaseTank extends BaseObject {
 
     //坦克的炮筒是一个内部类
     private class Gun {
-        Direction gunDir; //炮口方向
+        Dir gunDir; //炮口方向
 
         void draw(Graphics g) {
             switch (gunDir) {
@@ -96,34 +96,34 @@ public class BaseTank extends BaseObject {
 
     private void locateDirection() {
         if (!bL && !bR && !bU && !bD) {
-            dir = Direction.STOP;
+            dir = Dir.STOP;
         }
         if (!bL && !bR && !bU && bD) {
-            dir = Direction.D;
+            dir = Dir.D;
         }
         if (bL && !bR && !bU && !bD) {
-            dir = Direction.L;
+            dir = Dir.L;
         }
         if (!bL && bR && !bU && !bD) {
-            dir = Direction.R;
+            dir = Dir.R;
         }
         if (!bL && !bR && bU && !bD) {
-            dir = Direction.U;
+            dir = Dir.U;
         }
         if (bL && !bR && !bU && bD) {
-            dir = Direction.LD;
+            dir = Dir.LD;
         }
         if (bL && !bR && bU && !bD) {
-            dir = Direction.LU;
+            dir = Dir.LU;
         }
         if (!bL && bR && bU && !bD) {
-            dir = Direction.RU;
+            dir = Dir.RU;
         }
         if (!bL && bR && !bU && bD) {
-            dir = Direction.RD;
+            dir = Dir.RD;
         }
         //改变炮口方向
-        if (dir != Direction.STOP) {
+        if (dir != Dir.STOP) {
             this.gun.gunDir = dir;
         }
     }
@@ -171,11 +171,11 @@ public class BaseTank extends BaseObject {
         locateDirection();
     }
 
-    public void changeGunDir(Direction dir) {
+    public void changeGunDir(Dir dir) {
         this.gun.gunDir = dir;
     }
 
-    public Direction getGunDir() {
+    public Dir getGunDir() {
         return this.gun.gunDir;
     }
 }

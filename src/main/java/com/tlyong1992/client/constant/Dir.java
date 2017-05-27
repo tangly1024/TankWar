@@ -5,7 +5,7 @@ package com.tlyong1992.client.constant;
  * DATE：2017/4/24
  * TIME：14:04
  */
-public enum Direction {
+public enum Dir {
 
     L("左"),
 
@@ -31,7 +31,7 @@ public enum Direction {
         return value;
     }
 
-    Direction(String value) {
+    Dir(String value) {
         this.value = value;
     }
 }

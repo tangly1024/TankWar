@@ -1,6 +1,6 @@
 package com.tlyong1992.client.model;
 
-import com.tlyong1992.client.constant.Direction;
+import com.tlyong1992.client.constant.Dir;
 import com.tlyong1992.client.view.MainView;
 
 import java.awt.*;
@@ -18,7 +18,7 @@ public abstract class BaseObject {
     protected int speedY;
     protected int width;
     protected int height;
-    protected Direction dir;//移动方向
+    protected Dir dir;//移动方向
 
     public BaseObject(int x, int y, int xSpeed, int ySpeed, int width, int height) {
         this.positionX = x;

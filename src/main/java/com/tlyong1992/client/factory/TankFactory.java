@@ -1,7 +1,7 @@
 package com.tlyong1992.client.factory;
 
 import com.tlyong1992.client.constant.Constant;
-import com.tlyong1992.client.constant.Direction;
+import com.tlyong1992.client.constant.Dir;
 import com.tlyong1992.client.model.BaseTank;
 import com.tlyong1992.client.model.EnemyTank;
 import com.tlyong1992.client.model.MyTank;
@@ -17,16 +17,16 @@ import java.util.Random;
 public class TankFactory {
 
     public static BaseTank getDefaulMyTank() {
-        return new MyTank(true, Constant.TANK_POSITION_DEFAULT_X, Constant.TANK_POSITION_DEFAULT_Y, Constant.TANK_MOVE_SPEED_X, Constant.TANK_MOVE_SPEED_Y, Constant.TANK_WIDTH, Constant.TANK_HEIGHT, Direction.STOP);
+        return new MyTank(true, Constant.TANK_POSITION_DEFAULT_X, Constant.TANK_POSITION_DEFAULT_Y, Constant.TANK_MOVE_SPEED_X, Constant.TANK_MOVE_SPEED_Y, Constant.TANK_WIDTH, Constant.TANK_HEIGHT, Dir.STOP);
     }
 
-    public static EnemyTank getEnmemyTank(int positionX, int positionY, Direction dir) {
+    public static EnemyTank getEnmemyTank(int positionX, int positionY, Dir dir) {
         return new EnemyTank(false, positionX, positionY, Constant.TANK_MOVE_SPEED_X, Constant.TANK_MOVE_SPEED_Y, Constant.TANK_WIDTH, Constant.TANK_HEIGHT, dir);
     }
 
     public static void generateRandomEnemy() {
         Random rand = new Random();
-        Direction dir = Direction.values()[rand.nextInt(8)];
+        Dir dir = Dir.values()[rand.nextInt(8)];
         EnemyTank enemyTank = TankFactory.getEnmemyTank(rand.nextInt(Constant.WINDOW_WIDTH - 100) + 40, rand.nextInt(Constant.WINDOW_HEIGHT - 100) + 50, dir);
         ObjectManager.singleTon.getEnemyTankList().add(enemyTank);
     }
