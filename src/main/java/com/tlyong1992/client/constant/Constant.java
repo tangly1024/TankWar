@@ -11,8 +11,8 @@ public class Constant {
     public static int WINDOW_POSITION_X = 600;
     public static int WINDOW_POSITION_Y = 300;
 
-    public static int TANK_POSITION_DEFAULT_X = 500;
-    public static int TANK_POSITION_DEFAULT_Y = 500;
+    public static int TANK_POSITION_DEFAULT_X = 100;
+    public static int TANK_POSITION_DEFAULT_Y = 100;
     public static int TANK_MOVE_SPEED_X = 3;
     public static int TANK_MOVE_SPEED_Y = 3;
     public static int TANK_WIDTH = 30;

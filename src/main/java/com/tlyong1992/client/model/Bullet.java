@@ -51,64 +51,64 @@ public class Bullet extends BaseObject {
                 }else{
                     live = false;
                 }
-                if(positionY - mainView.getOffsetY() + tank.getHeight() / 2 > 0){
+                if(positionY - mainView.getOffsetY() + tank.getHeight() / 2 > mainView.getOffsetY()- mainView.getTitleBsrHeight()){
                     positionY -= speedY;
                 }else{
                     live = false;
                 }
                 break;
             case RU:
-                if(positionX + width + mainView.getOffsetX() < mainView.getWidth() ){
+                if(positionX + width + mainView.getOffsetX() < mainView.getWidth() - mainView.getOffsetX()){
                     positionX += speedX;
                 }else{
                     live = false;
                 }
-                if(positionY - mainView.getOffsetY() + tank.getHeight() / 2 > 0){
+                if(positionY - mainView.getOffsetY() + tank.getHeight() / 2 > mainView.getOffsetY()- mainView.getTitleBsrHeight()){
                     positionY -= speedY;
                 }else{
                     live = false;
                 }
                 break;
             case R:
-                if(positionX + width + mainView.getOffsetX() < mainView.getWidth() ){
+                if(positionX + width + mainView.getOffsetX() < mainView.getWidth() - mainView.getOffsetX()){
                     positionX += speedX;
                 }else{
                     live = false;
                 }
                 break;
             case RD:
-                if(positionX + width + mainView.getOffsetX() < mainView.getWidth() ){
+                if(positionX + width + mainView.getOffsetX() < mainView.getWidth() - mainView.getOffsetX()){
                     positionX += speedX;
                 }else{
                     live = false;
                 }
-                if(positionY + height + 2 * (mainView.getOffsetY() - mainView.getTitleBsrHeight())  < mainView.getHeight()){
+                if(positionY + height  < mainView.getHeight() - 4 * (mainView.getOffsetY() - mainView.getTitleBsrHeight())){
                     positionY += speedY;
                 }else{
                     live = false;
                 }
                 break;
             case D:
-                if(positionY + height + 2 * (mainView.getOffsetY() - mainView.getTitleBsrHeight())  < mainView.getHeight()){
+                if(positionY + height  < mainView.getHeight() - 4 * (mainView.getOffsetY() - mainView.getTitleBsrHeight())){
                     positionY += speedY;
                 }else{
                     live = false;
                 }
                 break;
             case LD:
-                if(positionX - mainView.getOffsetX() + tank.getWidth() / 2 > 0 ){
+                if(positionX - mainView.getOffsetX() + tank.getWidth() / 2 > mainView.getOffsetY()- mainView.getTitleBsrHeight() ){
                     positionX -= speedX;
                 }else{
                     live = false;
                 }
-                if(positionY + height + 2 * (mainView.getOffsetY() - mainView.getTitleBsrHeight())  < mainView.getHeight()){
+                if(positionY + height  < mainView.getHeight() - 4 * (mainView.getOffsetY() - mainView.getTitleBsrHeight())){
                     positionY += speedY;
                 }else{
                     live = false;
                 }
                 break;
             case U:
-                if(positionY - mainView.getOffsetY() + tank.getHeight() / 2 > 0){
+                if(positionY - mainView.getOffsetY() + tank.getHeight() / 2 > mainView.getOffsetY()- mainView.getTitleBsrHeight()){
                     positionY -= speedY;
                 }else{
                     live = false;
