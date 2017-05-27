@@ -5,6 +5,7 @@ import com.tlyong1992.client.controller.KeyController;
 import com.tlyong1992.client.controller.WindowController;
 import com.tlyong1992.client.model.Bullet;
 import com.tlyong1992.client.model.EnemyTank;
+import com.tlyong1992.client.model.Explore;
 import com.tlyong1992.client.repository.ObjectManager;
 
 import javax.annotation.Resource;
@@ -84,6 +85,7 @@ public class MainView extends JFrame {
 
         gImage.drawString("导弹数量 : " + ObjectManager.singleTon.getBulletList().size(), offsetX + 20, offsetY + 20);
         gImage.drawString("坦克数量 : " + ObjectManager.singleTon.getEnemyTankList().size(), offsetX + 20, offsetY + 40);
+        gImage.drawString("爆炸数量 : " + ObjectManager.singleTon.getExploreList().size(), offsetX + 20, offsetY + 60);
 
         gImage.setColor(c);
     }
@@ -104,13 +106,23 @@ public class MainView extends JFrame {
             }
         }
 
-        Iterator<Bullet> it = ObjectManager.singleTon.getBulletList().iterator();
-        while (it.hasNext()) {
-            Bullet bullet = it.next();
+        Iterator<Bullet> bullIt = ObjectManager.singleTon.getBulletList().iterator();
+        while (bullIt.hasNext()) {
+            Bullet bullet = bullIt.next();
             if (bullet.isLive()) {
                 bullet.draw(g, this); //画出活着的子弹
             } else {
-                it.remove();
+                bullIt.remove();
+            }
+        }
+
+        Iterator<Explore> expIt = ObjectManager.singleTon.getExploreList().iterator();
+        while (expIt.hasNext()) {
+            Explore explore = expIt.next();
+            if (explore.isLive()) {
+                explore.draw(g, this); //画出活着的子弹
+            } else {
+                expIt.remove();
             }
         }
 

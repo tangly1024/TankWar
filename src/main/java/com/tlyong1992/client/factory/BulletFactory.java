@@ -11,7 +11,7 @@ import com.tlyong1992.client.model.Bullet;
  */
 public class BulletFactory {
 
-    public static Bullet buildMyBullet(BaseTank tank){
+    public static Bullet buildDefaultBullet(BaseTank tank){
         Bullet bullet = new Bullet(tank, Constant.BULLET_MOVE_SPEED_X, Constant.BULLET_MOVE_SPEED_Y, Constant.BULLET_WIDTH, Constant.BULLET_HEIGHT);
         return bullet;
     }

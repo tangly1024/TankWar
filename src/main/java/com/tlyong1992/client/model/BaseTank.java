@@ -151,7 +151,7 @@ public class BaseTank extends BaseObject {
      * 子弹发射
      */
     public void shoot() {
-        Bullet bullet = BulletFactory.buildMyBullet(this);
+        Bullet bullet = BulletFactory.buildDefaultBullet(this);
         ObjectManager.singleTon.getBulletList().add(bullet);
     }
 

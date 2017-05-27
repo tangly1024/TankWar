@@ -1,5 +1,6 @@
 package com.tlyong1992.client.model;
 
+import com.tlyong1992.client.repository.ObjectManager;
 import com.tlyong1992.client.view.MainView;
 import org.apache.log4j.Logger;
 
@@ -131,6 +132,7 @@ public class Bullet extends BaseObject {
             if (enemy == tank) {
                 return false;
             }
+            ObjectManager.singleTon.getExploreList().add(new Explore(this));
              return true;
         }
 
