@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.util.Random;
 
 /**
  * USER：tangly
@@ -36,10 +35,9 @@ public class InitController {
         //添加坦克对象
         BaseTank myTank = TankFactory.getDefaulMyTank();
         ObjectManager.singleTon.setMyTank(myTank);
-        Random rand = new Random();
-        for (int i = 0; i <= 1; i++) {
-            TankFactory.generateRandomEnemy();
-        }
+//        for (int i = 0; i <= 1; i++) {
+//            TankFactory.generateRandomEnemy();
+//        }
 
         logger.info("初始化窗口");
         mainView.initWindow();
