@@ -26,13 +26,6 @@ public class KeyController extends KeyAdapter {
             ObjectManager.singleTon.getMyTank().keyPressed(e);
         }
         switch (e.getKeyCode()){
-            case KeyEvent.VK_RIGHT:
-            case KeyEvent.VK_LEFT:
-            case KeyEvent.VK_UP:
-            case KeyEvent.VK_DOWN:
-            case KeyEvent.VK_SPACE:
-                ObjectManager.singleTon.getMyTank().keyPressed(e);
-                break;
             case KeyEvent.VK_R:
                 TankFactory.generateRandomEnemy();
                 break;

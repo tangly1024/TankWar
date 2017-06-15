@@ -14,6 +14,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 /**
+ * 初始化控制器，项目运行的入口
  * USER：tangly
  * DATE：2017/5/22
  * TIME：11:12
