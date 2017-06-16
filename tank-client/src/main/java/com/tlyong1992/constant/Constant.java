@@ -26,4 +26,7 @@ public class Constant {
     public static int WINDOW_WIDTH = 800;
     public static int WINDOW_HEIGHT = 600;
 
+    public static String SERVER_ADDRESS = "127.0.0.1";
+    public static int SERVER_PORT = 1024;
+
 }

@@ -2,6 +2,7 @@ package com.tlyong1992.controller;
 
 import com.tlyong1992.factory.TankFactory;
 import com.tlyong1992.model.BaseTank;
+import com.tlyong1992.net.NetManager;
 import com.tlyong1992.repository.ObjectManager;
 import com.tlyong1992.thread.EventThread;
 import com.tlyong1992.thread.PaintThread;
@@ -20,12 +21,15 @@ import javax.annotation.Resource;
  * TIME：11:12
  */
 @Controller
-public class InitController {
+public class MainController {
 
-    Logger logger = Logger.getLogger(InitController.class);
+    Logger logger = Logger.getLogger(MainController.class);
 
     @Resource
     ThreadPoolTaskExecutor mainExecutor;//线程调度
+
+    @Resource
+    NetManager netManager;
 
     @Resource
     MainView mainView;
@@ -42,16 +46,13 @@ public class InitController {
         //添加坦克对象
         BaseTank myTank = TankFactory.getDefaulMyTank();
         ObjectManager.singleTon.setMyTank(myTank);
-//        for (int i = 0; i <= 1; i++) {
-//            TankFactory.generateRandomEnemy();
-//        }
 
         logger.info("初始化窗口");
         mainView.initWindow();
         //AddListener
         mainView.addWindowListener(windowController);
         mainView.addKeyListener(keyController);
-
+        netManager.connect();
 
         mainExecutor.submit(new PaintThread(mainView));
         mainExecutor.submit(new EventThread(mainView, ObjectManager.singleTon.getMyTank(), ObjectManager.singleTon.getEnemyTankList()));

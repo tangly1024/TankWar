@@ -7,7 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * DATE：2017/5/22
  * TIME：11:00
  */
-public class Start {
+public class StartClient {
     public static void main(String[] args) {
         ClassPathXmlApplicationContext ct = new ClassPathXmlApplicationContext("applicationContext.xml");
     }
