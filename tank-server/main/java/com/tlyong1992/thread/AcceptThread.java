@@ -1,7 +1,7 @@
 package com.tlyong1992.thread;
 
-import com.tlyong1992.view.ServerMainWindow;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -15,15 +15,10 @@ import static com.tlyong1992.constant.ServerConstant.SERVER_PORT;
  * DATE：2017/5/22
  * TIME：16:16
  */
+@Component
 public class AcceptThread implements Runnable {
 
     Logger logger = Logger.getLogger(this.getClass());
-
-    ServerMainWindow mainView;
-
-    public AcceptThread(ServerMainWindow mainWindow) {
-        this.mainView = mainWindow;
-    }
 
     @Override
     public void run() {
@@ -34,12 +29,19 @@ public class AcceptThread implements Runnable {
             ss = new ServerSocket(SERVER_PORT);
             while (true) {
                 Socket s = ss.accept();
-                mainView.getActiontarget().setText("有新的连接: " + s + "\n");
+                logger.info("有新的连接: " + s + "\n");
+//                mainView.getActiontarget().setText("有新的连接: " + s + "\n");
+
+                try {
+//                   MainEvent.addText("有新的连接: "+s);
+//                    windowController.addText("有新的连接: "+s);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
 }
