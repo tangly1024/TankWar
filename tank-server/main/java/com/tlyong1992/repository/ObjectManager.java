@@ -18,26 +18,15 @@ public enum ObjectManager {
     singleTon;
     private Map<String, String> paramMap; //参数内存
     private List<EnemyTank> enemyTankList; //对象内存
-
-
-
     private List<Bullet> bulletList;//子弹列表
-
     private List<Explore> exploreList;//爆炸列表
-
     private BaseTank myTank = null; //主坦克
 
-    public Map<String, String> getParamMap() {
-        return paramMap;
-    }
     public List<EnemyTank> getEnemyTankList() {
         return enemyTankList;
     }
     public List<Explore> getExploreList() {
         return exploreList;
-    }
-    public List<Bullet> getBulletList() {
-        return bulletList;
     }
     public BaseTank getMyTank() {
         return myTank;

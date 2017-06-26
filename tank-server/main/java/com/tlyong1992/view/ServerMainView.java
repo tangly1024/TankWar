@@ -18,105 +18,43 @@ public class ServerMainView extends JFrame {
     private int windowPositionX = ServerConstant.WINDOW_POSITION_X;
     private int windowPositionY = ServerConstant.WINDOW_POSITION_Y;
     private String TITLE = ServerConstant.WINDOW_TITLE;
-    private int offsetY; //窗口边沿偏移值
-    private int offsetX; //窗口边沿偏移值
-    private int titleBsrHeight; //标题栏高度
+
+    private JTextArea textArea;
 
     Image offScreenImage = null;
 
     public void initWindow() {
+
+        textArea = new JTextArea();
+        textArea.setAutoscrolls(true);
+
+        this.setLayout(new BorderLayout());
+        this.setFont(new Font("Helvetica", Font.PLAIN, 14));
+//        this.getContentPane().add(new JButton("North"), "North");
+        this.getContentPane().add(new JButton("South"), "South");
+        this.getContentPane().add(new JButton("West"), "West");
+        this.getContentPane().add(new JButton("East"), "East");
+        this.getContentPane().add(textArea, "Center");
+//        this.pack();
+
+        JMenu menu = new JMenu("选项");     //创建JMenu菜单对象
+        JMenuItem item1 = new JMenuItem("菜单1");  //菜单项
+        JMenuItem item2 = new JMenuItem("菜单2");//菜单项
+        menu.add(item1);   //将菜单项目添加到菜单
+        menu.add(item2);    //将菜单项目添加到菜单
+        JMenuBar menuBar = new JMenuBar();  //创建菜单工具栏
+        menuBar.add(menu);      //将菜单增加到菜单工具栏
+        this.setJMenuBar(menuBar);  //为窗体设置菜单工具栏
+
         this.setSize(windowWidth, windowHeight);
         this.setTitle(TITLE);
         this.setVisible(true);
-        this.setResizable(false); //不可缩放窗口
+//        this.setResizable(false); //不可缩放窗口
         this.setLocation(windowPositionX, windowPositionY);
-        offsetY = windowHeight - this.getContentPane().getHeight();
-        offsetX = windowWidth - this.getContentPane().getWidth();
-        titleBsrHeight =this.getInsets().top;
-    }
-
-    @Override
-    public void paint(Graphics g) {
-
-        if (offScreenImage == null) {
-            offScreenImage = this.createImage(windowWidth, windowHeight);
-        }
-        Graphics gImage = offScreenImage.getGraphics();
-        //清屏
-        drawBackground(gImage);
-        drawObject(gImage);
-
-        //将画布内容同步到屏幕上
-        g.drawImage(offScreenImage, 0, 0, null);
-    }
-
-    private void drawBackground(Graphics gImage) {
-//        Color c = gImage.getColor();
-//        gImage.setColor(Color.black);
-//        gImage.fillRect(0, 0, windowWidth, windowHeight);
-//        gImage.setColor(Color.WHITE);
-//        //顶部水平线
-//        gImage.drawLine(offsetX, offsetY, windowWidth - offsetX, offsetY);
-//        //底部水平线
-//        gImage.drawLine(offsetX, windowHeight - 2 * (offsetY - titleBsrHeight), windowWidth - offsetX, windowHeight - 2 * (offsetY - +titleBsrHeight));
-//        //左侧垂直线
-//        gImage.drawLine(offsetX,offsetY,offsetX, windowHeight - 2 * (offsetY - titleBsrHeight));
-//        //右侧垂直线
-//        gImage.drawLine(windowWidth - offsetX, offsetY,windowWidth - offsetX, windowHeight - 2 * (offsetY - +titleBsrHeight));
-//
-//        gImage.drawString("导弹数量 : " + ObjectManager.singleTon.getBulletList().size(), offsetX + 20, offsetY + 20);
-//        gImage.drawString("坦克数量 : " + ObjectManager.singleTon.getEnemyTankList().size(), offsetX + 20, offsetY + 40);
-//        gImage.drawString("爆炸数量 : " + ObjectManager.singleTon.getExploreList().size(), offsetX + 20, offsetY + 60);
-//
-//        gImage.setColor(c);
-    }
-
-    void drawObject(Graphics g) {
-
-//        if(ObjectManager.singleTon.getMyTank()!=null && ObjectManager.singleTon.getMyTank().isLive()){
-//            ObjectManager.singleTon.getMyTank().draw(g, this);
-//        }
-//
-//        Iterator<EnemyTank> tankIt = ObjectManager.singleTon.getEnemyTankList().iterator();
-//        while (tankIt.hasNext()){
-//            EnemyTank enemyTank = tankIt.next();
-//            if(enemyTank.isLive()){
-//                enemyTank.draw(g,this);
-//            }else{
-//                tankIt.remove();
-//            }
-//        }
-//
-//        Iterator<Bullet> bullIt = ObjectManager.singleTon.getBulletList().iterator();
-//        while (bullIt.hasNext()) {
-//            Bullet bullet = bullIt.next();
-//            if (bullet.isLive()) {
-//                bullet.draw(g, this); //画出活着的子弹
-//            } else {
-//                bullIt.remove();
-//            }
-//        }
-//
-//        Iterator<Explore> expIt = ObjectManager.singleTon.getExploreList().iterator();
-//        while (expIt.hasNext()) {
-//            Explore explore = expIt.next();
-//            if (explore.isLive()) {
-//                explore.draw(g, this); //画出活着的子弹
-//            } else {
-//                expIt.remove();
-//            }
-//        }
 
     }
 
-
-    public int getOffsetY() {
-        return offsetY;
-    }
-    public int getOffsetX() {
-        return offsetX;
-    }
-    public int getTitleBsrHeight() {
-        return titleBsrHeight;
+    public JTextArea getTextArea() {
+        return textArea;
     }
 }

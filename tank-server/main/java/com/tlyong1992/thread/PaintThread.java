@@ -1,6 +1,6 @@
 package com.tlyong1992.thread;
 
-import com.tlyong1992.view.ServerMainWindow;
+import com.tlyong1992.view.ServerMainView;
 import org.apache.log4j.Logger;
 
 /**
@@ -13,19 +13,17 @@ public class PaintThread implements Runnable {
 
     Logger logger = Logger.getLogger(this.getClass());
 
-    private ServerMainWindow serverMainWindow;
-//    ServerMainWindow serverMainWindow;
+    private ServerMainView frame;
 
-    public PaintThread(ServerMainWindow serverMainWindow) {
-        this.serverMainWindow = serverMainWindow;
+    public PaintThread(ServerMainView frame) {
+        this.frame = frame;
     }
 
     @Override
     public void run() {
         logger.info("启动绘图线程");
-        serverMainWindow.init();
         while (true) {
-//            frame.repaint();
+            frame.repaint();
             try {
                 Thread.sleep(30);
             } catch (InterruptedException e) {

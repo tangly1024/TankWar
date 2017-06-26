@@ -1,6 +1,6 @@
 package com.tlyong1992.thread;
 
-import com.tlyong1992.view.ServerMainWindow;
+import com.tlyong1992.view.ServerMainView;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -19,9 +19,9 @@ public class AcceptThread implements Runnable {
 
     Logger logger = Logger.getLogger(this.getClass());
 
-    ServerMainWindow mainView;
+    ServerMainView mainView;
 
-    public AcceptThread(ServerMainWindow mainWindow) {
+    public AcceptThread(ServerMainView mainWindow) {
         this.mainView = mainWindow;
     }
 
@@ -34,7 +34,7 @@ public class AcceptThread implements Runnable {
             ss = new ServerSocket(SERVER_PORT);
             while (true) {
                 Socket s = ss.accept();
-                mainView.getActiontarget().setText("有新的连接: " + s + "\n");
+                mainView.getTextArea().setText(mainView.getTextArea().getText() + "有新的连接: " + s + "\n" );
             }
         } catch (IOException e) {
             e.printStackTrace();
