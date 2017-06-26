@@ -1,9 +1,12 @@
 package com.tlyong1992.thread;
 
+import com.tlyong1992.model.Client;
 import com.tlyong1992.view.ServerMainView;
 import org.apache.log4j.Logger;
 
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -34,7 +37,15 @@ public class AcceptThread implements Runnable {
             ss = new ServerSocket(SERVER_PORT);
             while (true) {
                 Socket s = ss.accept();
+                String ipAddress = s.getLocalAddress().getHostAddress();
+                int tcpPort =  s.getLocalPort();
+                InputStream is = s.getInputStream();
+                DataInputStream dis = new DataInputStream(is);
+                int udpPort = dis.readInt();
+                s.close();
+                Client client = new Client(ipAddress,udpPort,tcpPort);
                 mainView.getTextArea().setText(mainView.getTextArea().getText() + "有新的连接: " + s + "\n" );
+                mainView.getTextArea().setText(mainView.getTextArea().getText() + client + "\n");
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -4,6 +4,7 @@ import com.tlyong1992.constant.Constant;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
+import java.io.DataOutputStream;
 import java.net.Socket;
 
 /**
@@ -21,6 +22,10 @@ public class NetManager {
     public void connect() {
         try {
             s = new Socket(Constant.SERVER_ADDRESS, Constant.SERVER_PORT);
+            DataOutputStream dos = new DataOutputStream(s.getOutputStream());
+            dos.writeInt(1111);
+            dos.flush();
+            dos.close();
             logger.info("已连接上:"+s);
         }catch(Exception e){
             logger.error(e);
