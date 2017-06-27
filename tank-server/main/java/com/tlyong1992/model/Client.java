@@ -6,6 +6,7 @@ package com.tlyong1992.model;
  * TIME：18:11
  */
 public class Client {
+    private int id;
     private String ip;
     private int udpPort;
     private int tcpPort;
@@ -13,20 +14,29 @@ public class Client {
     @Override
     public String toString() {
         return "Client{" +
-                "ip='" + ip + '\'' +
+                "id=" + id +
+                ", ip='" + ip + '\'' +
                 ", udpPort=" + udpPort +
                 ", tcpPort=" + tcpPort +
                 '}';
     }
 
-    public Client(String ip, int udpPort, int tcpPort) {
+    public Client(int id, String ip, int udpPort, int tcpPort) {
+        this.id = id;
         this.ip = ip;
         this.udpPort = udpPort;
         this.tcpPort = tcpPort;
     }
 
-    public String getIp() {
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getIp() {
         return ip;
     }
 

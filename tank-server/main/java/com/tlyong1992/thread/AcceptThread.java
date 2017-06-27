@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.tlyong1992.constant.ServerConstant.SERVER_PORT;
 
@@ -21,6 +22,8 @@ import static com.tlyong1992.constant.ServerConstant.SERVER_PORT;
 public class AcceptThread implements Runnable {
 
     Logger logger = Logger.getLogger(this.getClass());
+
+    AtomicInteger ids = new AtomicInteger(0);
 
     ServerMainView mainView;
 
@@ -43,7 +46,8 @@ public class AcceptThread implements Runnable {
                 DataInputStream dis = new DataInputStream(is);
                 int udpPort = dis.readInt();
                 s.close();
-                Client client = new Client(ipAddress,udpPort,tcpPort);
+                int id = ids.addAndGet(1);
+                Client client = new Client(id,ipAddress,udpPort,tcpPort);
                 mainView.getTextArea().setText(mainView.getTextArea().getText() + "有新的连接: " + s + "\n" );
                 mainView.getTextArea().setText(mainView.getTextArea().getText() + client + "\n");
             }
