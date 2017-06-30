@@ -21,12 +21,12 @@ public class NetManager {
 
     public void connect() {
         try {
-            s = new Socket(Constant.SERVER_ADDRESS, Constant.SERVER_PORT);
+            s = new Socket(Constant.SERVER_ADDRESS, Constant.SERVER_TCP_PORT);
             DataOutputStream dos = new DataOutputStream(s.getOutputStream());
             dos.writeInt(1111);
             dos.flush();
             dos.close();
-            logger.info("已连接上:"+s);
+            logger.info("Socket 已连接: "+s);
         }catch(Exception e){
             logger.error(e);
         }

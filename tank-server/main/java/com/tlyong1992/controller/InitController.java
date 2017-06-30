@@ -4,6 +4,7 @@ import com.tlyong1992.repository.ObjectManager;
 import com.tlyong1992.thread.AcceptThread;
 import com.tlyong1992.thread.EventThread;
 import com.tlyong1992.thread.PaintThread;
+import com.tlyong1992.thread.UDPThread;
 import com.tlyong1992.view.ServerMainView;
 import org.apache.log4j.Logger;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -34,11 +35,12 @@ public class InitController {
 
     @PostConstruct
     public void init() {
-        logger.info("初始化服务器");
+        logger.info("------------>START<--------------");
         logger.info("初始化窗口");
         mainView.initWindow();
         mainView.addWindowListener(windowController);
 
+        mainExecutor.submit(new UDPThread(mainView));
         mainExecutor.submit(new PaintThread(mainView));
         mainExecutor.submit(new AcceptThread(mainView));
         mainExecutor.submit(new EventThread(mainView, ObjectManager.singleTon.getMyTank(), ObjectManager.singleTon.getEnemyTankList()));

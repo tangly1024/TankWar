@@ -31,7 +31,7 @@ public class EventThread implements Runnable {
 
     @Override
     public void run() {
-        logger.info("启动事件处理线程");
+        logger.info("事件线程启动");
         while (true) {
             try {
                 Thread.sleep(30);

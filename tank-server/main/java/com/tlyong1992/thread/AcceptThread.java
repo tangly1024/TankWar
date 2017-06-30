@@ -11,7 +11,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.tlyong1992.constant.ServerConstant.SERVER_PORT;
+import static com.tlyong1992.constant.ServerConstant.SERVER_TCP_PORT;
 
 /**
  * 接收处理Socket连接线程
@@ -33,11 +33,10 @@ public class AcceptThread implements Runnable {
 
     @Override
     public void run() {
-        logger.info("启动服务器接收线程 监听端口:" + SERVER_PORT);
+        logger.info("TCP服务启动 监听端口:" + SERVER_TCP_PORT);
         ServerSocket ss;
-
         try {
-            ss = new ServerSocket(SERVER_PORT);
+            ss = new ServerSocket(SERVER_TCP_PORT);
             while (true) {
                 Socket s = ss.accept();
                 String ipAddress = s.getLocalAddress().getHostAddress();

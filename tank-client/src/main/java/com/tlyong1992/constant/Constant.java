@@ -27,6 +27,8 @@ public class Constant {
     public static int WINDOW_HEIGHT = 600;
 
     public static String SERVER_ADDRESS = "127.0.0.1";
-    public static int SERVER_PORT = 1024;
+    public static int SERVER_UDP_PORT = 1024;
+    public static int SERVER_TCP_PORT = 1025;
+    public static int LOCAL_UDP_PORT = 1026;
 
 }

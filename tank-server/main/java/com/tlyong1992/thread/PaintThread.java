@@ -21,7 +21,7 @@ public class PaintThread implements Runnable {
 
     @Override
     public void run() {
-        logger.info("启动绘图线程");
+        logger.info("绘图线程 启动");
         while (true) {
             frame.repaint();
             try {
