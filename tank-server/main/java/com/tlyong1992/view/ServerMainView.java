@@ -21,7 +21,7 @@ public class ServerMainView extends JFrame {
 
     private JTextArea textArea;
 
-    Image offScreenImage = null;
+//    Image offScreenImage = null;
 
     public void initWindow() {
 

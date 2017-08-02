@@ -2,7 +2,6 @@ package com.tlyong1992.factory;
 
 import com.tlyong1992.constant.Constant;
 import com.tlyong1992.constant.Dir;
-import com.tlyong1992.model.BaseTank;
 import com.tlyong1992.model.EnemyTank;
 import com.tlyong1992.model.MyTank;
 import com.tlyong1992.repository.ObjectManager;
@@ -16,7 +15,7 @@ import java.util.Random;
  */
 public class TankFactory {
 
-    public static BaseTank getDefaulMyTank() {
+    public static MyTank getDefaulMyTank() {
         return new MyTank(true, Constant.TANK_POSITION_DEFAULT_X, Constant.TANK_POSITION_DEFAULT_Y, Constant.TANK_MOVE_SPEED_X, Constant.TANK_MOVE_SPEED_Y, Constant.TANK_WIDTH, Constant.TANK_HEIGHT, Dir.STOP);
     }
 

@@ -17,7 +17,7 @@ public class Bullet extends BaseObject {
 
     private BaseTank tank;//引用发出这颗子弹的坦克
 
-    boolean live = true;
+    private boolean live = true;
 
     public boolean isLive(){return live;}
     public void setLive(boolean live) {
@@ -43,76 +43,76 @@ public class Bullet extends BaseObject {
     public void move(ServerMainView mainView) {
         switch (dir) {
             case L:
-                if(positionX - mainView.getOffsetX() + tank.getWidth() / 2 > 0 ){
+                if(positionX  + tank.getWidth() / 2 > 0 ){
                     positionX -= speedX;
                 }else{
                     live = false;
                 }
                 break;
             case LU:
-                if(positionX - mainView.getOffsetX() + tank.getWidth() / 2 > 0 ){
+                if(positionX  + tank.getWidth() / 2 > 0 ){
                     positionX -= speedX;
                 }else{
                     live = false;
                 }
-                if(positionY - mainView.getOffsetY() + tank.getHeight() / 2 > mainView.getOffsetY()- mainView.getTitleBsrHeight()){
+                if(positionY  + tank.getHeight() / 2 > 0){
                     positionY -= speedY;
                 }else{
                     live = false;
                 }
                 break;
             case RU:
-                if(positionX + width + mainView.getOffsetX() < mainView.getWidth() - mainView.getOffsetX()){
+                if(positionX + width  < mainView.getWidth() ){
                     positionX += speedX;
                 }else{
                     live = false;
                 }
-                if(positionY - mainView.getOffsetY() + tank.getHeight() / 2 > mainView.getOffsetY()- mainView.getTitleBsrHeight()){
+                if(positionY  + tank.getHeight() / 2 > 0){
                     positionY -= speedY;
                 }else{
                     live = false;
                 }
                 break;
             case R:
-                if(positionX + width + mainView.getOffsetX() < mainView.getWidth() - mainView.getOffsetX()){
+                if(positionX + width  < mainView.getWidth() ){
                     positionX += speedX;
                 }else{
                     live = false;
                 }
                 break;
             case RD:
-                if(positionX + width + mainView.getOffsetX() < mainView.getWidth() - mainView.getOffsetX()){
+                if(positionX + width  < mainView.getWidth() ){
                     positionX += speedX;
                 }else{
                     live = false;
                 }
-                if(positionY + height  < mainView.getHeight() - 4 * (mainView.getOffsetY() - mainView.getTitleBsrHeight())){
+                if(positionY + height  < mainView.getHeight() ){
                     positionY += speedY;
                 }else{
                     live = false;
                 }
                 break;
             case D:
-                if(positionY + height  < mainView.getHeight() - 4 * (mainView.getOffsetY() - mainView.getTitleBsrHeight())){
+                if(positionY + height  < mainView.getHeight() ){
                     positionY += speedY;
                 }else{
                     live = false;
                 }
                 break;
             case LD:
-                if(positionX - mainView.getOffsetX() + tank.getWidth() / 2 > mainView.getOffsetY()- mainView.getTitleBsrHeight() ){
+                if(positionX  + tank.getWidth() / 2 > 0 ){
                     positionX -= speedX;
                 }else{
                     live = false;
                 }
-                if(positionY + height  < mainView.getHeight() - 4 * (mainView.getOffsetY() - mainView.getTitleBsrHeight())){
+                if(positionY + height  < mainView.getHeight() ){
                     positionY += speedY;
                 }else{
                     live = false;
                 }
                 break;
             case U:
-                if(positionY - mainView.getOffsetY() + tank.getHeight() / 2 > mainView.getOffsetY()- mainView.getTitleBsrHeight()){
+                if(positionY  + tank.getHeight() / 2 > 0){
                     positionY -= speedY;
                 }else{
                     live = false;

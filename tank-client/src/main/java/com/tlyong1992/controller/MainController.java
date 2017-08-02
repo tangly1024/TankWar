@@ -2,7 +2,7 @@ package com.tlyong1992.controller;
 
 import com.tlyong1992.constant.Constant;
 import com.tlyong1992.factory.TankFactory;
-import com.tlyong1992.model.BaseTank;
+import com.tlyong1992.model.MyTank;
 import com.tlyong1992.net.NetManager;
 import com.tlyong1992.repository.ObjectManager;
 import com.tlyong1992.thread.EventThread;
@@ -26,16 +26,16 @@ import java.net.*;
 @Controller
 public class MainController {
 
-    Logger logger = Logger.getLogger(MainController.class);
+    private Logger logger = Logger.getLogger(MainController.class);
 
     @Resource
-    ThreadPoolTaskExecutor mainExecutor;//线程调度
+    private ThreadPoolTaskExecutor mainExecutor;//线程调度
 
     @Resource
-    NetManager netManager;
+    private NetManager netManager;
 
     @Resource
-    MainView mainView;
+    private MainView mainView;
 
     @Resource
     private KeyController keyController;
@@ -47,7 +47,7 @@ public class MainController {
     public void init() {
         logger.info("对象初始化");
         //添加坦克对象
-        BaseTank myTank = TankFactory.getDefaulMyTank();
+        MyTank myTank = TankFactory.getDefaulMyTank();
         ObjectManager.singleTon.setMyTank(myTank);
 
         logger.info("窗口初始化");
@@ -65,14 +65,9 @@ public class MainController {
             ds.connect(InetAddress.getLocalHost(), Constant.SERVER_UDP_PORT);
 
             ds.send(new DatagramPacket(bytes,bytes.length));
-        } catch (SocketException e) {
-            e.printStackTrace();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         mainExecutor.submit(new PaintThread(mainView));
         mainExecutor.submit(new EventThread(mainView, ObjectManager.singleTon.getMyTank(), ObjectManager.singleTon.getEnemyTankList()));
     }

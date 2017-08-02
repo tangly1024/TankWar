@@ -13,13 +13,18 @@ import java.awt.event.KeyEvent;
  * DATE：2017/4/21
  * TIME：16:12
  */
-public class BaseTank extends BaseObject {
+public abstract class BaseTank extends BaseObject {
 
-    private int width = 30;
-    private int height = 30;
+    private int id = 0;//默认坦克id为0
 
-    private boolean good;
+    private boolean good = true;
     private boolean live = true;
+
+    private Gun gun;
+
+    boolean isGood(){
+        return good;
+    }
 
     public boolean isLive() {
         return live;
@@ -29,70 +34,36 @@ public class BaseTank extends BaseObject {
         this.live = live;
     }
 
-    private Gun gun = new Gun();
+    Gun getGun(){
+        return gun;
+    }
+
+
     private boolean bU = false;
     private boolean bL = false;
     private boolean bR = false;
     private boolean bD = false;
 
-    public BaseTank(boolean bGood, int x, int y, int tankMoveSpeedX, int tankMoveSpeedY, int tankWidth, int tankHeight, Dir dir) {
+    BaseTank(boolean bGood, int x, int y, int tankMoveSpeedX, int tankMoveSpeedY, int tankWidth, int tankHeight, Dir dir) {
         super(x, y, tankMoveSpeedX, tankMoveSpeedY, tankWidth, tankHeight);
         this.good = bGood;
         this.dir = dir;
-        changeGunDir(Dir.D); //初始化炮筒方向
+        gun = new Gun(this);
     }
 
-    public void draw(Graphics g, MainView mainView) {
-        Color c = g.getColor();
-        if (this.good) {
-            g.setColor(Color.BLUE);
-        } else {
-            g.setColor(Color.GREEN);
+    abstract public void draw(Graphics g, MainView mainView);
+
+    public void setId(int id) {
+        synchronized (this){
+            this.id = id;
         }
-        g.fillOval(positionX, positionY, width, height); //坦克身体是一个圆
-        g.setColor(Color.RED);
-        //画出炮筒
-        gun.draw(g);
-        g.setColor(c);
+    }
+
+    int getId(){
+        return this.id;
     }
 
     //坦克的炮筒是一个内部类
-    private class Gun {
-        Dir gunDir; //炮口方向
-
-        void draw(Graphics g) {
-            switch (gunDir) {
-                case L:
-                    g.drawLine(positionX, positionY + height / 2, positionX + width / 2, positionY + height / 2);
-                    break;
-                case LU:
-                    g.drawLine((int) (positionX + (width / 2) - (width / 2) / Math.sqrt(2)) - 3, (int) (positionY + (height / 2) / Math.sqrt(2)) - 5, positionX + width / 2, positionY + height / 2);
-                    break;
-                case U:
-                    g.drawLine(positionX + (width / 2), positionY, positionX + width / 2, positionY + height / 2);
-                    break;
-                case RU:
-                    g.drawLine((int) (positionX + (width / 2) + (width / 2) / Math.sqrt(2) + 3), (int) (positionY + (height / 2) / Math.sqrt(2)) - 5, positionX + width / 2, positionY + height / 2);
-                    break;
-                case R:
-                    g.drawLine(positionX + width, positionY + height / 2, positionX + width / 2, positionY + height / 2);
-                    break;
-                case RD:
-                    g.drawLine((int) (positionX + (width / 2) + (width / 2) / Math.sqrt(2)), (int) (positionY + height / 2 + (height / 2) / Math.sqrt(2) + 2), positionX + width / 2, positionY + height / 2);
-                    break;
-                case D:
-                    g.drawLine(positionX + width / 2, positionY + height, positionX + width / 2, positionY + height / 2);
-                    break;
-                case LD:
-                    g.drawLine((int) (positionX + (width / 2) - (width / 2) / Math.sqrt(2)), (int) (positionY + height / 2 + (height / 2) / Math.sqrt(2) + 2), positionX + width / 2, positionY + height / 2);
-                    break;
-                case STOP:
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
 
     private void locateDirection() {
         if (!bL && !bR && !bU && !bD) {
@@ -171,11 +142,11 @@ public class BaseTank extends BaseObject {
         locateDirection();
     }
 
-    public void changeGunDir(Dir dir) {
+    void changeGunDir(Dir dir) {
         this.gun.gunDir = dir;
     }
 
-    public Dir getGunDir() {
+    Dir getGunDir() {
         return this.gun.gunDir;
     }
 }

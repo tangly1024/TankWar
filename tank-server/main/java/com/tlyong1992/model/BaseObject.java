@@ -10,17 +10,17 @@ import java.awt.*;
  * DATE：2017/4/24
  * TIME：15:12
  */
-public abstract class BaseObject {
+abstract class BaseObject {
 
-    protected int positionX;
-    protected int positionY;
-    protected int speedX;
-    protected int speedY;
-    protected int width;
-    protected int height;
-    protected Dir dir;//移动方向
+    int positionX;
+    int positionY;
+    int speedX;
+    int speedY;
+    int width;
+    int height;
+    Dir dir;//移动方向
 
-    public BaseObject(int x, int y, int xSpeed, int ySpeed, int width, int height) {
+    BaseObject(int x, int y, int xSpeed, int ySpeed, int width, int height) {
         this.positionX = x;
         this.positionY = y;
         this.speedX = xSpeed;
@@ -29,80 +29,80 @@ public abstract class BaseObject {
         this.height = height;
     }
 
-    public int getPositionX() {
+    int getPositionX() {
         return positionX;
     }
 
-    public int getPositionY() {
+    int getPositionY() {
         return positionY;
     }
 
-    public Rectangle getRect(){
-        return new Rectangle(positionX,positionY,width,height);
+    Rectangle getRect() {
+        return new Rectangle(positionX, positionY, width, height);
     }
 
-    public int getWidth() {
+    int getWidth() {
         return width;
     }
 
-    public int getHeight() {
+    int getHeight() {
         return height;
     }
 
-    public abstract void draw(Graphics g, ServerMainView mainView);
+    abstract void draw(Graphics g, ServerMainView mainView);
 
     //处理物体移动的函数
-    public void move(ServerMainView mainView) {
+    void move(ServerMainView mainView) {
         switch (dir) {
             case L:
-                if(positionX - mainView.getOffsetX() > 0 ){
+                if (positionX > 0) {
                     positionX -= speedX;
                 }
                 break;
             case LU:
-                if(positionX - mainView.getOffsetX() > 0 ){
+                if (positionX > 0) {
                     positionX -= speedX;
                 }
-                if(positionY - mainView.getOffsetY() > 0){
+                if (positionY > 0) {
                     positionY -= speedY;
                 }
                 break;
             case RU:
-                if(positionX + width + mainView.getOffsetX()  < mainView.getWidth() ){
+                if (positionX + width < mainView.getWidth()) {
                     positionX += speedX;
                 }
-                if(positionY - mainView.getOffsetY() > 0){
+                if (positionY > 0) {
                     positionY -= speedY;
                 }
                 break;
             case R:
-                if(positionX + width + mainView.getOffsetX()  < mainView.getWidth() ){
+                if (positionX + width < mainView.getWidth()) {
                     positionX += speedX;
                 }
                 break;
             case RD:
-                if(positionX + width + mainView.getOffsetX()  < mainView.getWidth() ){
+                if (positionX + width < mainView.getWidth()) {
                     positionX += speedX;
                 }
-                if(positionY + height + 2 * (mainView.getOffsetY() - mainView.getTitleBsrHeight())  < mainView.getHeight()){
+                if (positionY + height < mainView.getHeight()) {
                     positionY += speedY;
                 }
                 break;
             case D:
-                if(positionY + height + 2 * (mainView.getOffsetY() - mainView.getTitleBsrHeight())  < mainView.getHeight()){
+                if (positionY + height < mainView.getHeight()) {
                     positionY += speedY;
                 }
                 break;
             case LD:
-                if(positionX - mainView.getOffsetX() > 0 ){
+                if (positionX > 0) {
                     positionX -= speedX;
                 }
-                if(positionY + height + 2 * (mainView.getOffsetY() - mainView.getTitleBsrHeight())  < mainView.getHeight()){
+                if (positionY + height < mainView.getHeight()) {
                     positionY += speedY;
                 }
                 break;
             case U:
-                if(positionY - mainView.getOffsetY() > 0){
+                if (positionY > 0) {
                     positionY -= speedY;
                 }
                 break;
