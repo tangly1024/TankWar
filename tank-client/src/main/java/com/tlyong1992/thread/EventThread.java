@@ -5,7 +5,7 @@ import com.tlyong1992.model.BaseTank;
 import com.tlyong1992.model.Bullet;
 import com.tlyong1992.model.EnemyTank;
 import com.tlyong1992.repository.ObjectManager;
-import com.tlyong1992.view.MainView;
+import com.tlyong1992.view.ClientMainView;
 import org.apache.log4j.Logger;
 
 import java.util.Iterator;
@@ -26,9 +26,9 @@ public class EventThread implements Runnable {
 
     BaseTank myTank;
 
-    MainView mainView;
+    ClientMainView mainView;
 
-    public EventThread(MainView mainView, BaseTank myTank, List<EnemyTank> objectList) {
+    public EventThread(ClientMainView mainView, BaseTank myTank, List<EnemyTank> objectList) {
         this.mainView = mainView;
         this.myTank = myTank;
         this.tankList = objectList;
@@ -49,26 +49,27 @@ public class EventThread implements Runnable {
     }
 
     /**
-     * 处理武器的碰撞
+     * 处理子弹的碰撞
      */
     private void handleAttack() {
         //TODO 处理武器的碰撞 有一定概率 子弹打不死
         Iterator<EnemyTank> it = ObjectManager.singleTon.getEnemyTankList().iterator();
         while(it.hasNext()){
             EnemyTank enemy = it.next();
-            for (Bullet bullet : ObjectManager.singleTon.getBulletList()) {
+            for (Bullet bullet : enemy.getBulletList()) {
+                if(bullet.attackTank(myTank)){
+                    enemy.setLive(false);
+                    bullet.setLive(false);
+                }
+            }
+            for (Bullet bullet : myTank.getBulletList()) {
                 if(bullet.attackTank(enemy)){
                     enemy.setLive(false);
                     bullet.setLive(false);
                 }
             }
         }
-        for (Bullet bullet : ObjectManager.singleTon.getBulletList()) {
-            if(bullet.attackTank(myTank)){
-                myTank.setLive(false);
-                bullet.setLive(false);
-            }
-        }
+
     }
 
     /**

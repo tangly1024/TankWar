@@ -12,6 +12,7 @@ import java.net.Socket;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.tlyong1992.constant.ServerConstant.SERVER_TCP_PORT;
+import static com.tlyong1992.constant.ServerConstant.SERVER_UDP_PORT;
 
 /**
  * 接收处理Socket连接线程
@@ -51,6 +52,9 @@ public class AcceptThread implements Runnable {
                 //告诉客户端id
                 DataOutputStream dos = new DataOutputStream(s.getOutputStream());
                 dos.writeInt(id);
+
+                dos.writeInt(SERVER_UDP_PORT);//告诉客户端UDP_PORT端口
+
                 s.close();
             }
         } catch (IOException e) {

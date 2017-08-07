@@ -1,7 +1,6 @@
 package com.tlyong1992.model;
 
-import com.tlyong1992.repository.ObjectManager;
-import com.tlyong1992.view.ServerMainView;
+import com.tlyong1992.view.MainView;
 import org.apache.log4j.Logger;
 
 import java.awt.*;
@@ -17,7 +16,7 @@ public class Bullet extends BaseObject {
 
     private BaseTank tank;//引用发出这颗子弹的坦克
 
-    private boolean live = true;
+    boolean live = true;
 
     public boolean isLive(){return live;}
     public void setLive(boolean live) {
@@ -31,7 +30,7 @@ public class Bullet extends BaseObject {
     }
 
     //子弹自己的draw方法
-    public void draw(Graphics g, ServerMainView mainView) {
+    public void draw(Graphics g, MainView mainView) {
         Color c = g.getColor();
         g.setColor(Color.RED);
         g.fillOval(tank.getWidth() / 2 + positionX, tank.getHeight() / 2 + positionY, width, height);
@@ -40,79 +39,79 @@ public class Bullet extends BaseObject {
     }
 
     @Override
-    public void move(ServerMainView mainView) {
+    public void move(MainView mainView) {
         switch (dir) {
             case L:
-                if(positionX  + tank.getWidth() / 2 > 0 ){
+                if(positionX - mainView.getOffsetX() + tank.getWidth() / 2 > 0 ){
                     positionX -= speedX;
                 }else{
                     live = false;
                 }
                 break;
             case LU:
-                if(positionX  + tank.getWidth() / 2 > 0 ){
+                if(positionX - mainView.getOffsetX() + tank.getWidth() / 2 > 0 ){
                     positionX -= speedX;
                 }else{
                     live = false;
                 }
-                if(positionY  + tank.getHeight() / 2 > 0){
+                if(positionY - mainView.getOffsetY() + tank.getHeight() / 2 > mainView.getOffsetY()- mainView.getTitleBsrHeight()){
                     positionY -= speedY;
                 }else{
                     live = false;
                 }
                 break;
             case RU:
-                if(positionX + width  < mainView.getWidth() ){
+                if(positionX + width + mainView.getOffsetX() < mainView.getWidth() - mainView.getOffsetX()){
                     positionX += speedX;
                 }else{
                     live = false;
                 }
-                if(positionY  + tank.getHeight() / 2 > 0){
+                if(positionY - mainView.getOffsetY() + tank.getHeight() / 2 > mainView.getOffsetY()- mainView.getTitleBsrHeight()){
                     positionY -= speedY;
                 }else{
                     live = false;
                 }
                 break;
             case R:
-                if(positionX + width  < mainView.getWidth() ){
+                if(positionX + width + mainView.getOffsetX() < mainView.getWidth() - mainView.getOffsetX()){
                     positionX += speedX;
                 }else{
                     live = false;
                 }
                 break;
             case RD:
-                if(positionX + width  < mainView.getWidth() ){
+                if(positionX + width + mainView.getOffsetX() < mainView.getWidth() - mainView.getOffsetX()){
                     positionX += speedX;
                 }else{
                     live = false;
                 }
-                if(positionY + height  < mainView.getHeight() ){
+                if(positionY + height  < mainView.getHeight() - 4 * (mainView.getOffsetY() - mainView.getTitleBsrHeight())){
                     positionY += speedY;
                 }else{
                     live = false;
                 }
                 break;
             case D:
-                if(positionY + height  < mainView.getHeight() ){
+                if(positionY + height  < mainView.getHeight() - 4 * (mainView.getOffsetY() - mainView.getTitleBsrHeight())){
                     positionY += speedY;
                 }else{
                     live = false;
                 }
                 break;
             case LD:
-                if(positionX  + tank.getWidth() / 2 > 0 ){
+                if(positionX - mainView.getOffsetX() + tank.getWidth() / 2 > mainView.getOffsetY()- mainView.getTitleBsrHeight() ){
                     positionX -= speedX;
                 }else{
                     live = false;
                 }
-                if(positionY + height  < mainView.getHeight() ){
+                if(positionY + height  < mainView.getHeight() - 4 * (mainView.getOffsetY() - mainView.getTitleBsrHeight())){
                     positionY += speedY;
                 }else{
                     live = false;
                 }
                 break;
             case U:
-                if(positionY  + tank.getHeight() / 2 > 0){
+                if(positionY - mainView.getOffsetY() + tank.getHeight() / 2 > mainView.getOffsetY()- mainView.getTitleBsrHeight()){
                     positionY -= speedY;
                 }else{
                     live = false;
@@ -132,8 +131,8 @@ public class Bullet extends BaseObject {
             if (enemy == tank) {
                 return false;
             }
-            ObjectManager.singleTon.getExploreList().add(new Explore(this));
-             return true;
+            tank.getExploreList().add(new Explore(this));
+            return true;
         }
 
         return false;

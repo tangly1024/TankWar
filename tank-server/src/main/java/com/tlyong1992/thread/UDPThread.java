@@ -5,7 +5,6 @@ import com.tlyong1992.view.ServerMainView;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 
@@ -27,16 +26,13 @@ public class UDPThread implements Runnable {
     @Override
     public void run() {
         DatagramSocket ds = null;
-        byte[] bytes = new byte[1024];
         try {
             ds = new DatagramSocket(ServerConstant.SERVER_UDP_PORT);
             logger.info("UDP 服务器启动 监听端口" + ServerConstant.SERVER_UDP_PORT);
-            while (true){
-                DatagramPacket dp = new DatagramPacket(bytes,bytes.length);
-                ds.receive(dp);
-//                System.out.println(dp);
-                frame.getTextArea().setText(frame.getTextArea().getText() + dp.getAddress() + "; " + dp.getPort() + "; " + dp.getData() + "\n");
-            }
+
+//            frame.getTextArea().setText(frame.getTextArea().getText() + dp.getAddress() + "; " + dp.getPort() + "; " + dp.getData() + "\n");
+
+
         } catch (SocketException e) {
             if(ds!=null){
                 ds.close();

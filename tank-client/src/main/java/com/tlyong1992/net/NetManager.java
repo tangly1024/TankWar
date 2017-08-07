@@ -1,7 +1,8 @@
 package com.tlyong1992.net;
 
-import com.tlyong1992.constant.Constant;
+import com.tlyong1992.constant.ClientConstant;
 import com.tlyong1992.repository.ObjectManager;
+import com.tlyong1992.thread.UDPThread;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +26,7 @@ public class NetManager {
 
     public void connect() {
         try {
-            s = new Socket(Constant.SERVER_ADDRESS, Constant.SERVER_TCP_PORT);
+            s = new Socket(ClientConstant.SERVER_ADDRESS, ClientConstant.SERVER_TCP_PORT);
             DataOutputStream dos = new DataOutputStream(s.getOutputStream());
             dos.writeInt(1111);
 //            dos.flush();
@@ -34,10 +35,15 @@ public class NetManager {
             int id = dis.readInt();
             ObjectManager.singleTon.getMyTank().setId(id);
 
+            int udpPort = dis.readInt();
+
+            new Thread(new UDPThread(ClientConstant.SERVER_ADDRESS,udpPort)).start();
+
             logger.info("Socket 已连接: " + s);
             logger.info("该客户端分配到的id为: " + id);
+            logger.info("服务器的UDP端口为: " + udpPort);
         } catch (ConnectException e) {
-            logger.error("连接不上服务器: IP " + Constant.SERVER_ADDRESS + "; PORT " + Constant.SERVER_TCP_PORT);
+            logger.error("连接不上服务器: IP " + ClientConstant.SERVER_ADDRESS + "; PORT " + ClientConstant.SERVER_TCP_PORT);
         } catch (Exception e) {
             logger.error(e);
         }

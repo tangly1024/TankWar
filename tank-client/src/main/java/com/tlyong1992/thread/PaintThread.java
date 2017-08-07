@@ -1,6 +1,6 @@
 package com.tlyong1992.thread;
 
-import com.tlyong1992.view.MainView;
+import com.tlyong1992.view.ClientMainView;
 import org.apache.log4j.Logger;
 
 /**
@@ -13,9 +13,9 @@ public class PaintThread implements Runnable {
 
     Logger logger = Logger.getLogger(this.getClass());
 
-    private MainView frame;
+    private ClientMainView frame;
 
-    public PaintThread(MainView frame) {
+    public PaintThread(ClientMainView frame) {
         this.frame = frame;
     }
 

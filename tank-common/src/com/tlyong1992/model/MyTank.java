@@ -17,20 +17,17 @@ public class MyTank extends BaseTank {
 
     @Override
     public void draw(Graphics g, MainView mainView) {
-        {
-            Color c = g.getColor();
-            if (isGood()) {
-                g.setColor(Color.BLUE);
-            } else {
-                g.setColor(Color.GREEN);
-            }
-            g.fillOval(positionX, positionY, width, height); //坦克身体是一个圆
-            g.setColor(Color.RED);
-            g.drawString(String.valueOf(getId()), positionX + width / 2, positionY);
-            //画出炮筒
-            getGun().draw(g);
-            g.setColor(c);
+        Color c = g.getColor();
+        if (isGood()) {
+            g.setColor(Color.BLUE);
+        } else {
+            g.setColor(Color.GREEN);
         }
+        g.fillOval(positionX, positionY, width, height); //坦克身体是一个圆
+        g.setColor(Color.RED);
+        g.drawString(String.valueOf(getId()), positionX + width / 2, positionY); //写出坦克的id
+        getGun().draw(g);//画出炮筒,画出炮筒的时机由炮筒的宿主坦克控制
+        g.setColor(c);
     }
 
 }

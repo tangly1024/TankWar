@@ -2,11 +2,13 @@ package com.tlyong1992.model;
 
 import com.tlyong1992.constant.Dir;
 import com.tlyong1992.factory.BulletFactory;
-import com.tlyong1992.repository.ObjectManager;
 import com.tlyong1992.view.MainView;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * USER：tangly
@@ -16,7 +18,6 @@ import java.awt.event.KeyEvent;
 public abstract class BaseTank extends BaseObject {
 
     private int id = 0;//默认坦克id为0
-
     private boolean good = true;
     private boolean live = true;
 
@@ -38,6 +39,16 @@ public abstract class BaseTank extends BaseObject {
         return gun;
     }
 
+    private List<Explore> exploreList = Collections.synchronizedList(new ArrayList<Explore>()); //爆炸列表
+    private List<Bullet> bulletList = Collections.synchronizedList(new ArrayList<Bullet>());//子弹列表
+
+    public List<Explore> getExploreList() {
+        return exploreList;
+    }
+
+    public List<Bullet> getBulletList() {
+        return bulletList;
+    }
 
     private boolean bU = false;
     private boolean bL = false;
@@ -59,7 +70,7 @@ public abstract class BaseTank extends BaseObject {
         }
     }
 
-    int getId(){
+    public int getId(){
         return this.id;
     }
 
@@ -123,7 +134,7 @@ public abstract class BaseTank extends BaseObject {
      */
     public void shoot() {
         Bullet bullet = BulletFactory.buildDefaultBullet(this);
-        ObjectManager.singleTon.getBulletList().add(bullet);
+        bulletList.add(bullet);
     }
 
     public void keyReleased(KeyEvent e) {
@@ -149,4 +160,5 @@ public abstract class BaseTank extends BaseObject {
     Dir getGunDir() {
         return this.gun.gunDir;
     }
+
 }
