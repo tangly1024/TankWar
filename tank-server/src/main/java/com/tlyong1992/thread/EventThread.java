@@ -2,7 +2,7 @@ package com.tlyong1992.thread;
 
 import com.tlyong1992.model.BaseTank;
 import com.tlyong1992.model.EnemyTank;
-import com.tlyong1992.view.ServerMainView;
+import com.tlyong1992.view.ServerWindow;
 import org.apache.log4j.Logger;
 
 import java.util.List;
@@ -21,9 +21,9 @@ public class EventThread implements Runnable {
 
     BaseTank myTank;
 
-    ServerMainView mainView;
+    ServerWindow mainView;
 
-    public EventThread(ServerMainView mainView, BaseTank myTank, List<EnemyTank> objectList) {
+    public EventThread(ServerWindow mainView, BaseTank myTank, List<EnemyTank> objectList) {
         this.mainView = mainView;
         this.myTank = myTank;
         this.tankList = objectList;
@@ -31,7 +31,7 @@ public class EventThread implements Runnable {
 
     @Override
     public void run() {
-        logger.info("事件线程启动");
+        mainView.showLog("事件线程启动");
         while (true) {
             try {
                 Thread.sleep(30);

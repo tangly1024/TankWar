@@ -5,7 +5,7 @@ import com.tlyong1992.thread.AcceptThread;
 import com.tlyong1992.thread.EventThread;
 import com.tlyong1992.thread.PaintThread;
 import com.tlyong1992.thread.UDPThread;
-import com.tlyong1992.view.ServerMainView;
+import com.tlyong1992.view.impl.ServerMainWindow;
 import org.apache.log4j.Logger;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Controller;
@@ -27,23 +27,19 @@ public class InitController {
     @Resource
     ThreadPoolTaskExecutor mainExecutor;//线程调度
 
-    @Resource
-    ServerMainView mainView;
+//    @Resource
+//    ServerMainView mainView;
 
     @Resource
-    private WindowController windowController;
+    ServerMainWindow serverMainWindow;
 
     @PostConstruct
     public void init() {
-        logger.info("------------>START<--------------");
-        logger.info("初始化窗口");
-        mainView.initWindow();
-        mainView.addWindowListener(windowController);
-
-        mainExecutor.submit(new UDPThread(mainView));
-        mainExecutor.submit(new PaintThread(mainView));
-        mainExecutor.submit(new AcceptThread(mainView));
-        mainExecutor.submit(new EventThread(mainView, ObjectManager.singleTon.getMyTank(), ObjectManager.singleTon.getEnemyTankList()));
+        serverMainWindow.showLog("------------>START<--------------");
+        mainExecutor.submit(new UDPThread(serverMainWindow));
+        mainExecutor.submit(new PaintThread(serverMainWindow));
+        mainExecutor.submit(new AcceptThread(serverMainWindow));
+        mainExecutor.submit(new EventThread(serverMainWindow, ObjectManager.singleTon.getMyTank(), ObjectManager.singleTon.getEnemyTankList()));
     }
 
 }

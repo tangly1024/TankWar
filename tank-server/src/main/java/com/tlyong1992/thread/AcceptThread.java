@@ -1,7 +1,7 @@
 package com.tlyong1992.thread;
 
 import com.tlyong1992.model.Client;
-import com.tlyong1992.view.ServerMainView;
+import com.tlyong1992.view.ServerWindow;
 import org.apache.log4j.Logger;
 
 import java.io.DataInputStream;
@@ -26,9 +26,9 @@ public class AcceptThread implements Runnable {
 
     private AtomicInteger ids = new AtomicInteger(0);
 
-    private ServerMainView mainView;
+    private ServerWindow mainView;
 
-    public AcceptThread(ServerMainView mainWindow) {
+    public AcceptThread(ServerWindow mainWindow) {
         this.mainView = mainWindow;
     }
 
@@ -46,8 +46,8 @@ public class AcceptThread implements Runnable {
                 int udpPort = dis.readInt();//读取UDP端口
                 int id = ids.addAndGet(1);
                 Client client = new Client(id,ipAddress,udpPort,tcpPort);
-                mainView.getTextArea().setText(mainView.getTextArea().getText() + "有新的连接: " + s + "\n" );
-                mainView.getTextArea().setText(mainView.getTextArea().getText() + client + "\n");
+                mainView.showLog("有新的连接: " + s + "\n");
+                mainView.showLog("client : " + client + "\n");
 
                 //告诉客户端id
                 DataOutputStream dos = new DataOutputStream(s.getOutputStream());

@@ -18,4 +18,14 @@ public class Client {
         this.udpPort = udpPort;
         this.tcpPort = tcpPort;
     }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", ipAddress='" + ipAddress + '\'' +
+                ", udpPort=" + udpPort +
+                ", tcpPort=" + tcpPort +
+                '}';
+    }
 }

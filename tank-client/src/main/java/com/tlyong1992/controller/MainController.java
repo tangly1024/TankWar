@@ -59,12 +59,11 @@ public class MainController {
 
         //发一个包给服务端
         DatagramSocket  ds;
-        byte[] bytes = new byte[1024];
         try {
             ds =  new DatagramSocket(ClientConstant.LOCAL_UDP_PORT,InetAddress.getLocalHost());
             ds.connect(InetAddress.getLocalHost(), ClientConstant.SERVER_UDP_PORT);
-
-            ds.send(new DatagramPacket(bytes,bytes.length));
+            String testSendText = "测试发送数据包";
+            ds.send(new DatagramPacket(testSendText.getBytes(),testSendText.getBytes().length));
         } catch (IOException e) {
             e.printStackTrace();
         }

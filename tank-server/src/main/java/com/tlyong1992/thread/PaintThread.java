@@ -1,7 +1,6 @@
 package com.tlyong1992.thread;
 
-import com.tlyong1992.view.ServerMainView;
-import org.apache.log4j.Logger;
+import com.tlyong1992.view.ServerWindow;
 
 /**
  * 绘图线程
@@ -11,19 +10,17 @@ import org.apache.log4j.Logger;
  */
 public class PaintThread implements Runnable {
 
-    Logger logger = Logger.getLogger(this.getClass());
+    private ServerWindow mainView;
 
-    private ServerMainView frame;
-
-    public PaintThread(ServerMainView frame) {
-        this.frame = frame;
+    public PaintThread(ServerWindow mainView) {
+        this.mainView = mainView;
     }
 
     @Override
     public void run() {
-        logger.info("绘图线程 启动");
+        mainView.showLog("绘图线程 启动");
         while (true) {
-            frame.repaint();
+//            frame.repaint();
             try {
                 Thread.sleep(30);
             } catch (InterruptedException e) {
