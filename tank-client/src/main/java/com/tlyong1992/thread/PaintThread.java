@@ -1,7 +1,11 @@
 package com.tlyong1992.thread;
 
-import com.tlyong1992.view.ClientMainView;
+import com.tlyong1992.view.MainView;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
+import javax.swing.*;
 
 /**
  * 绘图线程
@@ -9,25 +13,24 @@ import org.apache.log4j.Logger;
  * DATE：2017/5/22
  * TIME：16:20
  */
+@Component
 public class PaintThread implements Runnable {
 
-    Logger logger = Logger.getLogger(this.getClass());
-
-    private ClientMainView frame;
-
-    public PaintThread(ClientMainView frame) {
-        this.frame = frame;
-    }
+    @Resource
+    private MainView clientMainWindow;
 
     @Override
     public void run() {
-        logger.info("启动绘图线程");
+        Logger logger = Logger.getLogger(PaintThread.class);
+
+        clientMainWindow.showLog(logger, "启动绘图线程");
         while (true) {
-            frame.repaint();
             try {
+                JPanel gp = clientMainWindow.getGamePanel();
+                gp.update(clientMainWindow.getGraphics());
                 Thread.sleep(30);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                clientMainWindow.showLog(logger, e);
             }
         }
     }

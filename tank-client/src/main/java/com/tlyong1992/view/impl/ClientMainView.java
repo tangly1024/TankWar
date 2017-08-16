@@ -1,10 +1,12 @@
-package com.tlyong1992.view;
+package com.tlyong1992.view.impl;
 
 import com.tlyong1992.constant.ClientConstant;
 import com.tlyong1992.model.Bullet;
 import com.tlyong1992.model.EnemyTank;
 import com.tlyong1992.model.Explore;
 import com.tlyong1992.repository.ObjectManager;
+import com.tlyong1992.view.MainView;
+import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -139,5 +141,25 @@ public class ClientMainView extends JFrame implements MainView {
     }
     public int getTitleBsrHeight() {
         return titleBsrHeight;
+    }
+
+    @Override
+    public void showLog(Logger logger, Object o) {
+
+    }
+
+    @Override
+    public JPanel getGamePanel() {
+        return null;
+    }
+
+    @Override
+    public JTextArea getTextArea() {
+        return null;
+    }
+
+    @Override
+    public void resize() {
+
     }
 }

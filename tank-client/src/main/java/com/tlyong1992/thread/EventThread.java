@@ -1,15 +1,15 @@
 package com.tlyong1992.thread;
 
 import com.tlyong1992.constant.Dir;
-import com.tlyong1992.model.BaseTank;
 import com.tlyong1992.model.Bullet;
 import com.tlyong1992.model.EnemyTank;
 import com.tlyong1992.repository.ObjectManager;
-import com.tlyong1992.view.ClientMainView;
+import com.tlyong1992.view.MainView;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -18,25 +18,17 @@ import java.util.Random;
  * DATE：2017/5/22
  * TIME：16:16
  */
+@Component
 public class EventThread implements Runnable {
 
-    Logger logger = Logger.getLogger(this.getClass());
+    @Resource
+    private MainView clientMainWindow;
 
-    List<EnemyTank> tankList;
-
-    BaseTank myTank;
-
-    ClientMainView mainView;
-
-    public EventThread(ClientMainView mainView, BaseTank myTank, List<EnemyTank> objectList) {
-        this.mainView = mainView;
-        this.myTank = myTank;
-        this.tankList = objectList;
-    }
+    private Logger logger = Logger.getLogger(EventThread.class);
 
     @Override
     public void run() {
-        logger.info("启动事件处理线程");
+        clientMainWindow.showLog(logger,"启动事件处理线程");
         while (true) {
             handleMove();
             handleAttack();
@@ -57,12 +49,12 @@ public class EventThread implements Runnable {
         while(it.hasNext()){
             EnemyTank enemy = it.next();
             for (Bullet bullet : enemy.getBulletList()) {
-                if(bullet.attackTank(myTank)){
+                if(bullet.attackTank(ObjectManager.singleTon.getMyTank())){
                     enemy.setLive(false);
                     bullet.setLive(false);
                 }
             }
-            for (Bullet bullet : myTank.getBulletList()) {
+            for (Bullet bullet : ObjectManager.singleTon.getMyTank().getBulletList()) {
                 if(bullet.attackTank(enemy)){
                     enemy.setLive(false);
                     bullet.setLive(false);
@@ -76,15 +68,15 @@ public class EventThread implements Runnable {
      * 处理对象的移动
      */
     private void handleMove() {
-        myTank.move(mainView);
+        ObjectManager.singleTon.getMyTank().move(clientMainWindow);
 
         Random rand = new Random();
-        for (EnemyTank enemyTank : tankList) {
+        for (EnemyTank enemyTank : ObjectManager.singleTon.getEnemyTankList()) {
             enemyTank.countStep();
 
             //坦克对象的移动处理
             if(enemyTank.getStepCount() > 30 && enemyTank.getStepCount() < 60){
-                enemyTank.move(mainView);
+                enemyTank.move(clientMainWindow);
             }
 
             if( enemyTank.getStepCount() == 30 ){

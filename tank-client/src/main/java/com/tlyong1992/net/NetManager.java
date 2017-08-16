@@ -4,8 +4,10 @@ import com.tlyong1992.constant.ClientConstant;
 import com.tlyong1992.repository.ObjectManager;
 import com.tlyong1992.thread.UDPThread;
 import org.apache.log4j.Logger;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -24,7 +26,10 @@ public class NetManager {
 
     private Socket s = null;
 
-    public void connect() {
+    @Resource
+    private ThreadPoolTaskExecutor mainExecutor;//线程调度 在applicationContext.xml 中配置
+
+    public boolean connect() {
         try {
             s = new Socket(ClientConstant.SERVER_ADDRESS, ClientConstant.SERVER_TCP_PORT);
             DataOutputStream dos = new DataOutputStream(s.getOutputStream());
@@ -37,15 +42,18 @@ public class NetManager {
 
             int udpPort = dis.readInt();
 
-            new Thread(new UDPThread(ClientConstant.SERVER_ADDRESS,udpPort)).start();
+            mainExecutor.submit(new UDPThread(ClientConstant.SERVER_ADDRESS, udpPort));
 
             logger.info("Socket 已连接: " + s);
             logger.info("该客户端分配到的id为: " + id);
             logger.info("服务器的UDP端口为: " + udpPort);
+            return true;
         } catch (ConnectException e) {
-            logger.error("连接不上服务器: IP " + ClientConstant.SERVER_ADDRESS + "; PORT " + ClientConstant.SERVER_TCP_PORT);
+            logger.error("连接服务器失败: IP " + ClientConstant.SERVER_ADDRESS + "; PORT " + ClientConstant.SERVER_TCP_PORT);
+            return false;
         } catch (Exception e) {
-            logger.error(e);
+            logger.error("连接服务器异常:", e);
+            return false;
         }
     }
 

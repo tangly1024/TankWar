@@ -34,7 +34,7 @@ public class AcceptThread implements Runnable {
 
     @Override
     public void run() {
-        logger.info("TCP服务启动 监听端口:" + SERVER_TCP_PORT);
+        mainView.showLog("TCP服务启动 监听端口:" + SERVER_TCP_PORT);
         ServerSocket ss;
         try {
             ss = new ServerSocket(SERVER_TCP_PORT);
@@ -58,7 +58,7 @@ public class AcceptThread implements Runnable {
                 s.close();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            mainView.showLog(e);
         }
 
     }

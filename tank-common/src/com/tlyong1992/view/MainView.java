@@ -1,5 +1,8 @@
 package com.tlyong1992.view;
 
+import org.apache.log4j.Logger;
+
+import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -26,4 +29,15 @@ public interface MainView {
     public int getWidth();
 
     public int getTitleBsrHeight();
+
+    public void showLog(Logger logger, Object o);
+
+    public JPanel getGamePanel();
+
+    public JTextArea getTextArea();
+
+    public Graphics getGraphics();
+
+    public void resize();
+
 }

@@ -1,5 +1,6 @@
 package com.tlyong1992.repository;
 
+import com.tlyong1992.constant.Param;
 import com.tlyong1992.model.EnemyTank;
 import com.tlyong1992.model.MyTank;
 
@@ -14,12 +15,12 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public enum ObjectManager {
     singleTon;
-    private Map<String, String> paramMap; //参数内存
+    private Map<Param, Object> paramMap; //参数内存
     private List<EnemyTank> enemyTankList; //对象内存
 
     private MyTank myTank = null; //主坦克
 
-    public Map<String, String> getParamMap() {
+    public Map<Param, Object> getParamMap() {
         return paramMap;
     }
 
