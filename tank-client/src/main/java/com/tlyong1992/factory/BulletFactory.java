@@ -1,8 +1,8 @@
 package com.tlyong1992.factory;
 
-import com.tlyong1992.constant.Constant;
-import com.tlyong1992.model.BaseTank;
-import com.tlyong1992.model.Bullet;
+import com.tlyong1992.constant.GameConstant;
+import com.tlyong1992.model.tank.BaseTank;
+import com.tlyong1992.model.effect.Bullet;
 
 /**
  * USER：tangly
@@ -12,7 +12,7 @@ import com.tlyong1992.model.Bullet;
 public class BulletFactory {
 
     public static Bullet buildDefaultBullet(BaseTank tank){
-        Bullet bullet = new Bullet(tank, Constant.BULLET_MOVE_SPEED_X, Constant.BULLET_MOVE_SPEED_Y, Constant.BULLET_WIDTH, Constant.BULLET_HEIGHT);
+        Bullet bullet = new Bullet(tank, GameConstant.BULLET_MOVE_SPEED_X, GameConstant.BULLET_MOVE_SPEED_Y, GameConstant.BULLET_WIDTH, GameConstant.BULLET_HEIGHT);
         return bullet;
     }
 }

@@ -1,10 +1,9 @@
 package com.tlyong1992.factory;
 
-import com.tlyong1992.constant.Constant;
 import com.tlyong1992.constant.Dir;
-import com.tlyong1992.model.EnemyTank;
-import com.tlyong1992.model.MyTank;
-import com.tlyong1992.repository.ObjectManager;
+import com.tlyong1992.constant.GameConstant;
+import com.tlyong1992.model.tank.AITank;
+import com.tlyong1992.model.tank.MyTank;
 
 import java.util.Random;
 
@@ -16,17 +15,17 @@ import java.util.Random;
 public class TankFactory {
 
     public static MyTank getDefaulMyTank() {
-        return new MyTank(true, Constant.TANK_POSITION_DEFAULT_X, Constant.TANK_POSITION_DEFAULT_Y, Constant.TANK_MOVE_SPEED_X, Constant.TANK_MOVE_SPEED_Y, Constant.TANK_WIDTH, Constant.TANK_HEIGHT, Dir.STOP);
+        return new MyTank(true, GameConstant.TANK_POSITION_DEFAULT_X, GameConstant.TANK_POSITION_DEFAULT_Y, GameConstant.TANK_MOVE_SPEED_X, GameConstant.TANK_MOVE_SPEED_Y, GameConstant.TANK_WIDTH, GameConstant.TANK_HEIGHT, Dir.STOP);
     }
 
-    public static EnemyTank getEnmemyTank(int positionX, int positionY, Dir dir) {
-        return new EnemyTank(false, positionX, positionY, Constant.TANK_MOVE_SPEED_X, Constant.TANK_MOVE_SPEED_Y, Constant.TANK_WIDTH, Constant.TANK_HEIGHT, dir);
+    public static AITank getEnmemyTank(int positionX, int positionY, Dir dir) {
+        return new AITank(false, positionX, positionY, GameConstant.TANK_MOVE_SPEED_X, GameConstant.TANK_MOVE_SPEED_Y, GameConstant.TANK_WIDTH, GameConstant.TANK_HEIGHT, dir);
     }
 
-    public static void generateRandomEnemy() {
+    public static AITank generateRandomEnemy() {
         Random rand = new Random();
         Dir dir = Dir.values()[rand.nextInt(8)];
-        EnemyTank enemyTank = TankFactory.getEnmemyTank(rand.nextInt(Constant.WINDOW_WIDTH - 100) + 40, rand.nextInt(Constant.WINDOW_HEIGHT - 100) + 50, dir);
-        ObjectManager.singleTon.getEnemyTankList().add(enemyTank);
+        AITank enemyTank = TankFactory.getEnmemyTank(rand.nextInt(500) + 40, rand.nextInt(500) + 50, dir);
+        return enemyTank;
     }
 }

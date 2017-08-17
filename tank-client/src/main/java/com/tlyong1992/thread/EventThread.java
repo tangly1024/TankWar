@@ -1,11 +1,11 @@
 package com.tlyong1992.thread;
 
 import com.tlyong1992.constant.Dir;
-import com.tlyong1992.model.BaseTank;
-import com.tlyong1992.model.Bullet;
-import com.tlyong1992.model.EnemyTank;
+import com.tlyong1992.model.effect.Bullet;
+import com.tlyong1992.model.tank.AITank;
+import com.tlyong1992.model.tank.BaseTank;
 import com.tlyong1992.repository.ObjectManager;
-import com.tlyong1992.view.MainView;
+import com.tlyong1992.view.Impl.ClientMainView;
 import org.apache.log4j.Logger;
 
 import java.util.Iterator;
@@ -22,13 +22,15 @@ public class EventThread implements Runnable {
 
     Logger logger = Logger.getLogger(this.getClass());
 
-    List<EnemyTank> tankList;
+    List<BaseTank> tankList;
 
     BaseTank myTank;
 
-    MainView mainView;
+    ClientMainView mainView;
 
-    public EventThread(MainView mainView, BaseTank myTank, List<EnemyTank> objectList) {
+    Random rand = new Random(); //用于AI坦克的随机动作
+
+    public EventThread(ClientMainView mainView, BaseTank myTank, List<BaseTank> objectList) {
         this.mainView = mainView;
         this.myTank = myTank;
         this.tankList = objectList;
@@ -49,53 +51,52 @@ public class EventThread implements Runnable {
     }
 
     /**
-     * 处理武器的碰撞
+     * 处理子弹的碰撞
      */
     private void handleAttack() {
         //TODO 处理武器的碰撞 有一定概率 子弹打不死
-        Iterator<EnemyTank> it = ObjectManager.singleTon.getEnemyTankList().iterator();
+        Iterator<BaseTank> it = ObjectManager.singleTon.getOtherTanks().iterator();
         while(it.hasNext()){
-            EnemyTank enemy = it.next();
-            for (Bullet bullet : ObjectManager.singleTon.getBulletList()) {
+            BaseTank enemy = it.next();
+            for (Bullet bullet : enemy.getBulletList()) {
+                if(bullet.attackTank(myTank)){
+                    enemy.setLive(false);
+                    bullet.setLive(false);
+                }
+            }
+            for (Bullet bullet : myTank.getBulletList()) {
                 if(bullet.attackTank(enemy)){
                     enemy.setLive(false);
                     bullet.setLive(false);
                 }
             }
         }
-        for (Bullet bullet : ObjectManager.singleTon.getBulletList()) {
-            if(bullet.attackTank(myTank)){
-                myTank.setLive(false);
-                bullet.setLive(false);
-            }
-        }
+
     }
 
     /**
-     * 处理对象的移动
+     * 处理AI对象的移动
      */
     private void handleMove() {
         myTank.move(mainView);
-
-        Random rand = new Random();
-        for (EnemyTank enemyTank : tankList) {
-            enemyTank.countStep();
-
-            //坦克对象的移动处理
-            if(enemyTank.getStepCount() > 30 && enemyTank.getStepCount() < 60){
-                enemyTank.move(mainView);
-            }
-
-            if( enemyTank.getStepCount() == 30 ){
-                Dir dir = Dir.values()[rand.nextInt(8)];
-                enemyTank.changeDir(dir);
-                enemyTank.shoot();
-            }
-
-            if( enemyTank.getStepCount() == 60){
-                enemyTank.resetStepCount();
-                enemyTank.shoot();
-            }
+        for (BaseTank otherTank : tankList) {
+           if(otherTank instanceof AITank){
+               AITank aiTank = (AITank) otherTank;
+               aiTank.countStep();
+               //坦克对象的移动处理
+               if(aiTank.getStepCount() > 30 && aiTank.getStepCount() < 60){
+                   otherTank.move(mainView);
+               }
+               if( aiTank.getStepCount() == 30 ){
+                   Dir dir = Dir.values()[rand.nextInt(8)];
+                   aiTank.changeDir(dir);
+                   otherTank.shoot();
+               }
+               if( aiTank.getStepCount() == 60){
+                   aiTank.resetStepCount();
+                   otherTank.shoot();
+               }
+           }
 
         }
     }
