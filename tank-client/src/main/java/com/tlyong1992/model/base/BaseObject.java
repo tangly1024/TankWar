@@ -1,4 +1,4 @@
-package com.tlyong1992.model;
+package com.tlyong1992.model.base;
 
 import com.tlyong1992.constant.Dir;
 import com.tlyong1992.view.MainView;

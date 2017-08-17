@@ -1,7 +1,11 @@
-package com.tlyong1992.model;
+package com.tlyong1992.model.tank;
 
 import com.tlyong1992.constant.Dir;
 import com.tlyong1992.factory.BulletFactory;
+import com.tlyong1992.model.effect.Explore;
+import com.tlyong1992.model.base.BaseObject;
+import com.tlyong1992.model.effect.Bullet;
+import com.tlyong1992.model.effect.Gun;
 import com.tlyong1992.view.MainView;
 
 import java.awt.*;
@@ -11,11 +15,12 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * 普通坦克
  * USER：tangly
  * DATE：2017/4/21
  * TIME：16:12
  */
-public abstract class BaseTank extends BaseObject {
+public class BaseTank extends BaseObject {
 
     private int id = 0;//默认坦克id为0
     private boolean good = true;
@@ -23,7 +28,7 @@ public abstract class BaseTank extends BaseObject {
 
     private Gun gun;
 
-    boolean isGood(){
+    public boolean isGood(){
         return good;
     }
 
@@ -35,7 +40,7 @@ public abstract class BaseTank extends BaseObject {
         this.live = live;
     }
 
-    Gun getGun(){
+    public Gun getGun(){
         return gun;
     }
 
@@ -55,14 +60,29 @@ public abstract class BaseTank extends BaseObject {
     private boolean bR = false;
     private boolean bD = false;
 
-    BaseTank(boolean bGood, int x, int y, int tankMoveSpeedX, int tankMoveSpeedY, int tankWidth, int tankHeight, Dir dir) {
+    public BaseTank(boolean bGood, int x, int y, int tankMoveSpeedX, int tankMoveSpeedY, int tankWidth, int tankHeight, Dir dir) {
         super(x, y, tankMoveSpeedX, tankMoveSpeedY, tankWidth, tankHeight);
         this.good = bGood;
         this.dir = dir;
         gun = new Gun(this);
     }
 
-    abstract public void draw(Graphics g, MainView mainView);
+    public BaseTank(int id, int x, int y, int tankMoveSpeedX, int tankMoveSpeedY, int tankWidth, int tankHeight, Dir dir) {
+        super(x, y, tankMoveSpeedX, tankMoveSpeedY, tankWidth, tankHeight);
+        this.id = id;
+        this.dir = dir;
+        gun = new Gun(this);
+    }
+
+    public void draw(Graphics g, MainView mainView){
+        Color c = g.getColor();
+        g.setColor(Color.YELLOW); //默认坦克颜色用黄色画出
+        g.fillOval(positionX, positionY, width, height); //坦克身体是一个圆
+        g.setColor(Color.RED);
+        g.drawString(String.valueOf(getId()), positionX + width / 2, positionY); //写出坦克的id
+        getGun().draw(g);//画出炮筒,画出炮筒的时机由炮筒的宿主坦克控制
+        g.setColor(c);
+    }
 
     public void setId(int id) {
         synchronized (this){
@@ -129,9 +149,6 @@ public abstract class BaseTank extends BaseObject {
         locateDirection();
     }
 
-    /**
-     * 子弹发射
-     */
     public void shoot() {
         Bullet bullet = BulletFactory.buildDefaultBullet(this);
         bulletList.add(bullet);
@@ -153,11 +170,11 @@ public abstract class BaseTank extends BaseObject {
         locateDirection();
     }
 
-    void changeGunDir(Dir dir) {
+    public void changeGunDir(Dir dir) {
         this.gun.gunDir = dir;
     }
 
-    Dir getGunDir() {
+    public Dir getGunDir() {
         return this.gun.gunDir;
     }
 

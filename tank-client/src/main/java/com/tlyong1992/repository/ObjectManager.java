@@ -1,7 +1,7 @@
 package com.tlyong1992.repository;
 
-import com.tlyong1992.model.EnemyTank;
-import com.tlyong1992.model.MyTank;
+import com.tlyong1992.model.tank.BaseTank;
+import com.tlyong1992.model.tank.MyTank;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,7 +15,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public enum ObjectManager {
     singleTon;
     private Map<String, String> paramMap; //参数内存
-    private List<EnemyTank> enemyTankList; //对象内存
+
+    private List<BaseTank> otherTankList;
 
     private MyTank myTank = null; //主坦克
 
@@ -23,8 +24,8 @@ public enum ObjectManager {
         return paramMap;
     }
 
-    public List<EnemyTank> getEnemyTankList() {
-        return enemyTankList;
+    public List<BaseTank> getOtherTanks() {
+        return otherTankList;
     }
 
 
@@ -38,7 +39,7 @@ public enum ObjectManager {
 
     ObjectManager() {
         paramMap = new ConcurrentHashMap<>();
-        enemyTankList = Collections.synchronizedList(new ArrayList<EnemyTank>());
+        otherTankList = Collections.synchronizedList(new ArrayList<BaseTank>());
     }
 
 

@@ -1,21 +1,20 @@
 package com.tlyong1992.controller;
 
-import com.tlyong1992.constant.ClientConstant;
 import com.tlyong1992.factory.TankFactory;
-import com.tlyong1992.model.MyTank;
+import com.tlyong1992.model.tank.MyTank;
 import com.tlyong1992.net.NetManager;
 import com.tlyong1992.repository.ObjectManager;
 import com.tlyong1992.thread.EventThread;
 import com.tlyong1992.thread.PaintThread;
-import com.tlyong1992.view.ClientMainView;
+import com.tlyong1992.thread.UDPReceiveThread;
+import com.tlyong1992.thread.UDPSendThread;
+import com.tlyong1992.view.Impl.ClientMainView;
 import org.apache.log4j.Logger;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Controller;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.io.IOException;
-import java.net.*;
 
 /**
  * 初始化控制器，项目运行的入口
@@ -55,20 +54,14 @@ public class MainController {
         //AddListener
         mainView.addWindowListener(windowController);
         mainView.addKeyListener(keyController);
-        netManager.connect();
-
-        //发一个包给服务端
-        DatagramSocket  ds;
-        try {
-            ds =  new DatagramSocket(ClientConstant.LOCAL_UDP_PORT,InetAddress.getLocalHost());
-            ds.connect(InetAddress.getLocalHost(), ClientConstant.SERVER_UDP_PORT);
-            String testSendText = "测试发送数据包";
-            ds.send(new DatagramPacket(testSendText.getBytes(),testSendText.getBytes().length));
-        } catch (IOException e) {
-            e.printStackTrace();
+        Integer serverUdpPort = netManager.tcpConnect();
+        if(serverUdpPort!=null){
+            netManager.udpConnect(serverUdpPort);
+            mainExecutor.submit(new UDPSendThread(netManager.getUDPSocket()));
+            mainExecutor.submit(new UDPReceiveThread(netManager.getUDPSocket()));
         }
         mainExecutor.submit(new PaintThread(mainView));
-        mainExecutor.submit(new EventThread(mainView, ObjectManager.singleTon.getMyTank(), ObjectManager.singleTon.getEnemyTankList()));
+        mainExecutor.submit(new EventThread(mainView, ObjectManager.singleTon.getMyTank(), ObjectManager.singleTon.getOtherTanks()));
     }
 
 }

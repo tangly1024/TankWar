@@ -1,10 +1,11 @@
-package com.tlyong1992.model;
+package com.tlyong1992.model.effect;
 
 import com.tlyong1992.view.MainView;
 
 import java.awt.*;
 
 /**
+ * 爆炸火花
  * USER：tangly
  * DATE：2017/5/27
  * TIME：16:10

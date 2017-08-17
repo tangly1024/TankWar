@@ -1,9 +1,6 @@
 package com.tlyong1992.controller;
 
-import com.tlyong1992.repository.ObjectManager;
 import com.tlyong1992.thread.AcceptThread;
-import com.tlyong1992.thread.EventThread;
-import com.tlyong1992.thread.PaintThread;
 import com.tlyong1992.thread.UDPThread;
 import com.tlyong1992.view.impl.ServerMainWindow;
 import org.apache.log4j.Logger;
@@ -22,13 +19,10 @@ import javax.annotation.Resource;
 @Controller
 public class InitController {
 
-    Logger logger = Logger.getLogger(InitController.class);
+    private Logger logger = Logger.getLogger(this.getClass());
 
     @Resource
     ThreadPoolTaskExecutor mainExecutor;//线程调度
-
-//    @Resource
-//    ServerMainView mainView;
 
     @Resource
     ServerMainWindow serverMainWindow;
@@ -37,9 +31,8 @@ public class InitController {
     public void init() {
         serverMainWindow.showLog("------------>START<--------------");
         mainExecutor.submit(new UDPThread(serverMainWindow));
-        mainExecutor.submit(new PaintThread(serverMainWindow));
         mainExecutor.submit(new AcceptThread(serverMainWindow));
-        mainExecutor.submit(new EventThread(serverMainWindow, ObjectManager.singleTon.getMyTank(), ObjectManager.singleTon.getEnemyTankList()));
+//        mainExecutor.submit(new EventThread(serverMainWindow, ObjectManager.singleTon.getMyTank(), ObjectManager.singleTon.getEnemyTankList()));
     }
 
 }

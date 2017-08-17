@@ -27,6 +27,7 @@ public class ServerMainWindow extends JFrame implements ServerWindow {
     }
 
     private void okButtonActionPerformed(ActionEvent e) {
+        logger.info("退出");
         System.exit(0);
     }
 
@@ -109,10 +110,8 @@ public class ServerMainWindow extends JFrame implements ServerWindow {
             @Override
             public void run() {
                 if(log instanceof String){
-                    logger.info(log);
                     textArea1.setText( textArea1.getText() + log  + "\n");
                 }else if(log instanceof Exception){
-                    logger.error(log);
                     textArea1.setText( textArea1.getText() + ((Exception)log).getMessage() + "\n" );
                 }
             }

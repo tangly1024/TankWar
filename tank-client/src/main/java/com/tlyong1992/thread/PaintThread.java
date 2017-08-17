@@ -1,6 +1,6 @@
 package com.tlyong1992.thread;
 
-import com.tlyong1992.view.ClientMainView;
+import com.tlyong1992.view.Impl.ClientMainView;
 import org.apache.log4j.Logger;
 
 /**

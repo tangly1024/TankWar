@@ -10,7 +10,6 @@
 
     <modules>
         <module>tank-client</module>
-        <module>tank-common</module>
         <module>tank-server</module>
     </modules>
 

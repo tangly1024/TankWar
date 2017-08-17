@@ -19,6 +19,22 @@ public class Client {
         this.tcpPort = tcpPort;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public int getUdpPort() {
+        return udpPort;
+    }
+
+    public int getTcpPort() {
+        return tcpPort;
+    }
+
     @Override
     public String toString() {
         return "Client{" +

@@ -1,11 +1,14 @@
-package com.tlyong1992.model;
+package com.tlyong1992.model.effect;
 
+import com.tlyong1992.model.base.BaseObject;
+import com.tlyong1992.model.tank.BaseTank;
 import com.tlyong1992.view.MainView;
 import org.apache.log4j.Logger;
 
 import java.awt.*;
 
 /**
+ * 子弹
  * USER：tangly
  * DATE：2017/4/24
  * TIME：13:46

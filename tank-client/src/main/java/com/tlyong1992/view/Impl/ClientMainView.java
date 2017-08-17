@@ -1,10 +1,11 @@
-package com.tlyong1992.view;
+package com.tlyong1992.view.Impl;
 
 import com.tlyong1992.constant.ClientConstant;
-import com.tlyong1992.model.Bullet;
-import com.tlyong1992.model.EnemyTank;
-import com.tlyong1992.model.Explore;
+import com.tlyong1992.model.effect.Bullet;
+import com.tlyong1992.model.effect.Explore;
+import com.tlyong1992.model.tank.BaseTank;
 import com.tlyong1992.repository.ObjectManager;
+import com.tlyong1992.view.MainView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,7 +38,7 @@ public class ClientMainView extends JFrame implements MainView {
         this.setLocation(windowPositionX, windowPositionY);
         offsetY = windowHeight - this.getContentPane().getHeight();
         offsetX = windowWidth - this.getContentPane().getWidth();
-        titleBsrHeight =this.getInsets().top;
+        titleBsrHeight = this.getInsets().top;
 
     }
 
@@ -66,11 +67,16 @@ public class ClientMainView extends JFrame implements MainView {
         //底部水平线
         gImage.drawLine(offsetX, windowHeight - 2 * (offsetY - titleBsrHeight), windowWidth - offsetX, windowHeight - 2 * (offsetY - +titleBsrHeight));
         //左侧垂直线
-        gImage.drawLine(offsetX,offsetY,offsetX, windowHeight - 2 * (offsetY - titleBsrHeight));
+        gImage.drawLine(offsetX, offsetY, offsetX, windowHeight - 2 * (offsetY - titleBsrHeight));
         //右侧垂直线
-        gImage.drawLine(windowWidth - offsetX, offsetY,windowWidth - offsetX,  windowHeight - 2 * (offsetY - +titleBsrHeight));
+        gImage.drawLine(windowWidth - offsetX, offsetY, windowWidth - offsetX, windowHeight - 2 * (offsetY - +titleBsrHeight));
 
-        gImage.drawString("坦克数量 : " + ObjectManager.singleTon.getEnemyTankList().size(), offsetX + 20, offsetY + 40);
+        int totalTank = ObjectManager.singleTon.getOtherTanks().size();
+        if (ObjectManager.singleTon.getMyTank().isLive()) {
+            totalTank++;
+        }
+
+        gImage.drawString("坦克数量 : " + totalTank, offsetX + 20, offsetY + 40); //坦克数量加上自己
         gImage.drawString("导弹数量 : " + ObjectManager.singleTon.getMyTank().getBulletList().size(), offsetX + 20, offsetY + 20);
         gImage.drawString("爆炸数量 : " + ObjectManager.singleTon.getMyTank().getExploreList().size(), offsetX + 20, offsetY + 60);
 
@@ -79,7 +85,7 @@ public class ClientMainView extends JFrame implements MainView {
 
     public void drawObject(Graphics g) {
 
-        if(ObjectManager.singleTon.getMyTank()!=null && ObjectManager.singleTon.getMyTank().isLive()){
+        if (ObjectManager.singleTon.getMyTank() != null && ObjectManager.singleTon.getMyTank().isLive()) {
             ObjectManager.singleTon.getMyTank().draw(g, this);
             Iterator<Bullet> bullIt = ObjectManager.singleTon.getMyTank().getBulletList().iterator();
             while (bullIt.hasNext()) {
@@ -100,12 +106,12 @@ public class ClientMainView extends JFrame implements MainView {
                 }
             }
         }
-        Iterator<EnemyTank> tankIt = ObjectManager.singleTon.getEnemyTankList().iterator();
-        while (tankIt.hasNext()){
-            EnemyTank enemyTank = tankIt.next();
-            if(enemyTank.isLive()){
-                enemyTank.draw(g,this);
-            }else{
+        Iterator<BaseTank> tankIt = ObjectManager.singleTon.getOtherTanks().iterator();
+        while (tankIt.hasNext()) {
+            BaseTank enemyTank = tankIt.next();
+            if (enemyTank.isLive()) {
+                enemyTank.draw(g, this);
+            } else {
                 tankIt.remove();
             }
             Iterator<Bullet> bullIt = enemyTank.getBulletList().iterator();
@@ -134,9 +140,11 @@ public class ClientMainView extends JFrame implements MainView {
     public int getOffsetY() {
         return offsetY;
     }
+
     public int getOffsetX() {
         return offsetX;
     }
+
     public int getTitleBsrHeight() {
         return titleBsrHeight;
     }

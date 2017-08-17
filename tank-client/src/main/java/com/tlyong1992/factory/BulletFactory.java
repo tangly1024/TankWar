@@ -1,8 +1,8 @@
 package com.tlyong1992.factory;
 
 import com.tlyong1992.constant.GameConstant;
-import com.tlyong1992.model.BaseTank;
-import com.tlyong1992.model.Bullet;
+import com.tlyong1992.model.tank.BaseTank;
+import com.tlyong1992.model.effect.Bullet;
 
 /**
  * USER：tangly
